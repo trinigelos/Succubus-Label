@@ -1,0 +1,152 @@
+.article {
+  border: 1px solid var(--border);
+}
+
+.toggle {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  padding: 18px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+}
+
+.num {
+  font-size: 15px;
+  font-weight: 400;
+  min-width: 80px;
+}
+
+.customer {
+  flex: 1 1 180px;
+  font-size: 14px;
+}
+
+.customerMeta {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.pay {
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.badge {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 9px;
+}
+
+.badgePay {
+  border: 1px solid var(--error);
+  color: var(--error);
+}
+
+.badgeShip {
+  background: var(--text);
+  color: #000000;
+  border: 1px solid var(--text);
+}
+
+.badgeDone {
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.sign {
+  font-size: 16px;
+}
+
+.body {
+  border-top: 1px solid var(--line);
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 40px;
+}
+
+.col {
+  flex: 1 1 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.colLabel {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.muted {
+  color: var(--text-2);
+}
+
+.discreetBadge {
+  margin-top: 8px;
+  align-self: flex-start;
+  border: 1px solid var(--text);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+}
+
+.lines {
+  white-space: pre-line;
+}
+
+.actionCol {
+  flex: 1 1 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.actionCol input {
+  height: 48px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0 14px;
+  font-family: inherit;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.actionBtn {
+  height: 48px;
+  background: var(--text);
+  border: 0;
+  color: #000000;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.note {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.errorText {
+  margin: 0;
+  font-size: 12px;
+  color: var(--error);
+}

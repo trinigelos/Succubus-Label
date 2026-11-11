@@ -1,0 +1,81 @@
+.wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 32px var(--gutter);
+  text-align: center;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.logo span:first-child {
+  font-family: var(--font-display);
+  font-size: 34px;
+  letter-spacing: 0.06em;
+}
+
+.logo span:last-child {
+  font-size: 10px;
+  letter-spacing: 0.5em;
+  padding-left: 0.5em;
+  color: var(--muted);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 340px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.field label {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.field input {
+  height: 48px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0 14px;
+  font-family: inherit;
+  font-size: 15px;
+}
+
+.submit {
+  height: 52px;
+  background: var(--text);
+  color: #000000;
+  border: 0;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.message {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-2);
+}

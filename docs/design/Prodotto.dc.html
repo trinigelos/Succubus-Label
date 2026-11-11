@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Succubus Label — Set harness</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&amp;family=Archivo:wdth,wght@125,800&amp;family=Inter+Tight:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#000}
+a{color:#F2F0ED}a:hover{color:#FFFFFF}
+</style>
+</helmet>
+<div style="background: #000000; color: #F2F0ED; font-family: 'Inter Tight', system-ui, sans-serif; font-weight: 300; min-height: 100vh">
+
+  <div style="border-bottom: 1px solid #1E1E1E; padding: 11px 16px; text-align: center; font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase">Spedizioni 24/48h · Spedizione gratuita sopra € [SOGLIA]</div>
+  <header style="border-bottom: 1px solid #1E1E1E">
+    <nav aria-label="Principale" style="max-width: 1400px; margin: 0 auto; padding: 14px 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 32px">
+      <div style="display: flex; flex-wrap: wrap; gap: 4px 28px; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase">
+        <a href="Shop.dc.html" style="text-decoration: none; padding: 14px 0">Lingerie</a>
+        <a href="Main.dc.html#daytoday" style="text-decoration: none; padding: 14px 0">Day to day</a>
+        <a href="Shop.dc.html" style="text-decoration: none; padding: 14px 0">Harness</a>
+      </div>
+      <a href="Main.dc.html" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 2px">
+        <span style="font-family: 'Playfair Display', serif; font-size: 30px; letter-spacing: 0.06em; line-height: 1">SUCCUBUS</span>
+        <span style="font-size: 9px; letter-spacing: 0.5em; padding-left: 0.5em">LABEL</span>
+      </a>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px 28px; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase">
+        <a href="Main.dc.html#chi" style="text-decoration: none; padding: 14px 0">Chi sono</a>
+        <a href="Main.dc.html#contatti" style="text-decoration: none; padding: 14px 0">Contatti</a>
+        <a href="Carrello.dc.html" style="text-decoration: none; padding: 14px 0">Carrello ({{cartCount}})</a>
+      </div>
+    </nav>
+  </header>
+
+  <main style="max-width: 1400px; margin: 0 auto; padding: 32px 32px 112px">
+    <p style="margin: 0 0 28px; font-size: 12px; letter-spacing: 0.12em; color: #A6A29C"><a href="Main.dc.html" style="color: #A6A29C">Home</a> / <a href="Shop.dc.html" style="color: #A6A29C">Lingerie</a> / Set harness</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start">
+      <!-- Galleria -->
+      <div style="flex: 1.3 1 520px; min-width: 0; display: flex; flex-wrap: wrap-reverse; gap: 12px">
+        <div role="group" aria-label="Foto del prodotto" style="flex: 0 0 88px; display: flex; flex-direction: column; gap: 10px">
+          <button type="button" onClick="{{pick0}}" aria-label="Foto 1" style="{{thumb0}}"><img src="../img/harness.jpg" alt="" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover"></button>
+          <button type="button" onClick="{{pick1}}" aria-label="Foto 2" style="{{thumb1}}"><img src="../img/collare.jpg" alt="" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover"></button>
+          <button type="button" onClick="{{pick2}}" aria-label="Foto 3" style="{{thumb2}}"><img src="../img/polsino.jpg" alt="" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover"></button>
+          <button type="button" onClick="{{pick3}}" aria-label="Foto 4" style="{{thumb3}}"><img src="../img/casa.jpg" alt="" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover"></button>
+        </div>
+        <div style="flex: 1 1 400px; min-width: 0">
+          <sc-if value="{{img0}}" hint-placeholder-val="{{ true }}"><img src="../img/harness.jpg" alt="Set harness nero, vista frontale" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover"></sc-if>
+          <sc-if value="{{img1}}" hint-placeholder-val="{{ false }}"><img src="../img/collare.jpg" alt="Set harness indossato con collare" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover"></sc-if>
+          <sc-if value="{{img2}}" hint-placeholder-val="{{ false }}"><img src="../img/polsino.jpg" alt="Dettaglio della fibbia in pelle" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover"></sc-if>
+          <sc-if value="{{img3}}" hint-placeholder-val="{{ false }}"><img src="../img/casa.jpg" alt="Set harness in un set fotografico" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover"></sc-if>
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div style="flex: 1 1 400px; min-width: 0; max-width: 520px; display: flex; flex-direction: column; gap: 28px">
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <span style="font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #A6A29C">Harness · Nuovo</span>
+          <h1 style="margin: 0; font-family: 'Playfair Display', serif; font-weight: 400; font-size: clamp(36px, 3.6vw, 52px); line-height: 1.05">Set harness</h1>
+          <p style="margin: 0; font-size: 22px; font-weight: 400">€ [PREZZO]</p>
+          <p style="margin: 0; font-size: 13px; color: #A6A29C">IVA inclusa.</p>
+        </div>
+
+        <p style="margin: 0; font-size: 15px; line-height: 1.7; color: #C4C0BA">[Descrizione breve, nel suo tono: come veste, con cosa abbinarlo, per chi è.]</p>
+
+        <!-- Taglie -->
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; justify-content: space-between; align-items: baseline">
+            <span id="taglia-label" style="font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase">Taglia{{sizeLabel}}</span>
+            <button type="button" onClick="{{openGuide}}" style="background: transparent; border: 0; color: #F2F0ED; font-family: inherit; font-size: 12px; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; padding: 12px 0">Guida alle taglie</button>
+          </div>
+          <div role="radiogroup" aria-labelledby="taglia-label" style="display: flex; flex-wrap: wrap; gap: 8px">
+            <sc-for list="{{sizes}}" as="s" hint-placeholder-count="5">
+              <button type="button" role="radio" aria-checked="{{s.on}}" aria-label="{{s.aria}}" disabled="{{s.disabled}}" onClick="{{s.pick}}" style="{{s.style}}">{{s.label}}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{error}}" hint-placeholder-val="{{ false }}">
+            <p role="alert" style="margin: 0; font-size: 13px; color: #FF8F8F">Scegli una taglia per continuare.</p>
+          </sc-if>
+          <p style="margin: 0; font-size: 12px; color: #A6A29C">XL esaurita — <a href="Prodotto.dc.html" style="color: #A6A29C">avvisami quando torna</a></p>
+        </div>
+
+        <!-- Aggiungi -->
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <button type="button" onClick="{{add}}" style="height: 56px; background: #F2F0ED; color: #000000; border: 0; font-family: inherit; font-weight: 500; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer">Aggiungi al carrello</button>
+          <sc-if value="{{added}}" hint-placeholder-val="{{ false }}">
+            <div role="status" style="border: 1px solid #3A3A3A; padding: 18px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+              <span style="font-size: 14px">Aggiunto: Set harness, taglia {{size}}</span>
+              <span style="display: flex; gap: 16px">
+                <a href="Shop.dc.html" style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 12px 0; color: #A6A29C">Continua</a>
+                <a href="Carrello.dc.html" style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 12px 0">Vai al carrello →</a>
+              </span>
+            </div>
+          </sc-if>
+          <ul style="margin: 8px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: #C4C0BA">
+            <li>— Spedizione 24/48h in imballo discreto</li>
+            <li>— Pagamento sicuro con PayPal (anche con carta) o bonifico</li>
+            <li>— [Politica resi per l'intimo]</li>
+          </ul>
+        </div>
+
+        <!-- Accordion -->
+        <div style="border-top: 1px solid #1E1E1E">
+          <sc-for list="{{panels}}" as="p" hint-placeholder-count="4">
+            <div style="border-bottom: 1px solid #1E1E1E">
+              <button type="button" onClick="{{p.toggle}}" aria-expanded="{{p.open}}" style="width: 100%; min-height: 56px; display: flex; justify-content: space-between; align-items: center; background: transparent; border: 0; color: #F2F0ED; font-family: inherit; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; padding: 0">
+                <span>{{p.title}}</span><span aria-hidden="true">{{p.sign}}</span>
+              </button>
+              <sc-if value="{{p.isOpen}}" hint-placeholder-val="{{ false }}">
+                <p style="margin: 0 0 20px; font-size: 14px; line-height: 1.7; color: #C4C0BA; white-space: pre-line">{{p.body}}</p>
+              </sc-if>
+            </div>
+          </sc-for>
+          <sc-if value="{{guideOpen}}" hint-placeholder-val="{{ false }}">
+            <div style="padding: 20px 0; overflow-x: auto">
+              <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left">
+                <thead><tr style="color: #A6A29C"><th style="padding: 8px 8px 8px 0; font-weight: 400">Taglia</th><th style="padding: 8px; font-weight: 400">Seno (cm)</th><th style="padding: 8px; font-weight: 400">Vita (cm)</th><th style="padding: 8px; font-weight: 400">Fianchi (cm)</th></tr></thead>
+                <tbody>
+                  <tr style="border-top: 1px solid #1E1E1E"><td style="padding: 8px 8px 8px 0">XS</td><td style="padding: 8px">[—]</td><td style="padding: 8px">[—]</td><td style="padding: 8px">[—]</td></tr>
+                  <tr style="border-top: 1px solid #1E1E1E"><td style="padding: 8px 8px 8px 0">S</td><td style="padding: 8px">[—]</td><td style="padding: 8px">[—]</td><td style="padding: 8px">[—]</td></tr>
+                  <tr style="border-top: 1px solid #1E1E1E"><td style="padding: 8px 8px 8px 0">M</td><td style="padding: 8px">[—]</td><td style="padding: 8px">[—]</td><td style="padding: 8px">[—]</td></tr>
+                  <tr style="border-top: 1px solid #1E1E1E"><td style="padding: 8px 8px 8px 0">L</td><td style="padding: 8px">[—]</td><td style="padding: 8px">[—]</td><td style="padding: 8px">[—]</td></tr>
+                  <tr style="border-top: 1px solid #1E1E1E"><td style="padding: 8px 8px 8px 0">XL</td><td style="padding: 8px">[—]</td><td style="padding: 8px">[—]</td><td style="padding: 8px">[—]</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+
+    <!-- Completa il look -->
+    <section style="margin-top: 120px">
+      <h2 style="margin: 0 0 32px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px">
+        <span style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 40px">Completa</span>
+        <span style="font-family: 'Archivo', sans-serif; font-stretch: 125%; font-weight: 800; font-size: 36px">IL LOOK</span>
+      </h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px">
+        <a href="Prodotto.dc.html" style="text-decoration: none; display: flex; flex-direction: column; gap: 12px">
+          <img src="../img/collare.jpg" alt="Collare con guinzaglio" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover">
+          <span style="display: flex; justify-content: space-between; font-size: 14px"><span>Collare con guinzaglio</span><span>€ [PREZZO]</span></span>
+        </a>
+        <a href="Prodotto.dc.html" style="text-decoration: none; display: flex; flex-direction: column; gap: 12px">
+          <img src="../img/polsino.jpg" alt="Polsini in pelle" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover">
+          <span style="display: flex; justify-content: space-between; font-size: 14px"><span>Polsini in pelle</span><span>€ [PREZZO]</span></span>
+        </a>
+        <a href="Prodotto.dc.html" style="text-decoration: none; display: flex; flex-direction: column; gap: 12px">
+          <img src="../img/body.jpg" alt="Body in tulle" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover">
+          <span style="display: flex; justify-content: space-between; font-size: 14px"><span>Body in tulle</span><span>€ [PREZZO]</span></span>
+        </a>
+        <a href="Prodotto.dc.html" style="text-decoration: none; display: flex; flex-direction: column; gap: 12px">
+          <img src="../img/graffiti.jpg" alt="Set in rete con reggicalze" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover">
+          <span style="display: flex; justify-content: space-between; font-size: 14px"><span>Set in rete con reggicalze</span><span>€ [PREZZO]</span></span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer style="border-top: 1px solid #1E1E1E">
+    <div style="max-width: 1400px; margin: 0 auto; padding: 40px 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 12px; color: #A6A29C">
+      <span>© 2026 Succubus Label — P.IVA [NUMERO]</span>
+      <span style="display: flex; flex-wrap: wrap; gap: 20px"><a href="Main.dc.html#contatti" style="color: #A6A29C">Spedizioni e resi</a><a href="Main.dc.html#contatti" style="color: #A6A29C">Privacy</a><a href="Main.dc.html#contatti" style="color: #A6A29C">Termini di vendita</a></span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2500}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { img: 0, size: null, error: false, added: false, open: null, guide: false };
+  }
+  renderVals() {
+    const st = this.state;
+    const thumbBase = 'padding: 0; background: transparent; cursor: pointer; ';
+    const thumb = (i) => thumbBase + (st.img === i ? 'border: 1px solid #F2F0ED; opacity: 1;' : 'border: 1px solid transparent; opacity: 0.6;');
+    const sizeBase = 'min-width: 56px; height: 48px; padding: 0 14px; font-family: inherit; font-size: 14px; ';
+    const sizes = ['XS', 'S', 'M', 'L', 'XL'].map((label) => {
+      const out = label === 'XL';
+      const on = st.size === label;
+      let style = sizeBase;
+      if (out) style += 'background: transparent; color: #6E6B66; border: 1px solid #2A2A2A; text-decoration: line-through; cursor: not-allowed;';
+      else if (on) style += 'background: #F2F0ED; color: #000000; border: 1px solid #F2F0ED; cursor: pointer;';
+      else style += 'background: transparent; color: #F2F0ED; border: 1px solid #3A3A3A; cursor: pointer;';
+      return {
+        label, style,
+        on: on ? 'true' : 'false',
+        disabled: out,
+        aria: out ? label + ', esaurita' : label,
+        pick: () => { if (!out) this.setState({ size: label, error: false, added: false }); }
+      };
+    });
+    const panelData = [
+      ['dettagli', 'Dettagli e materiali', '[Materiali e composizione]\n[Chiusure, regolazioni, finiture]\nFatto a mano in [CITTÀ].'],
+      ['spedizioni', 'Spedizioni e resi', 'Spedizione 24/48h con [CORRIERE], in imballo neutro senza logo esterno.\n[Politica resi: per igiene l’intimo si può rendere solo con la protezione intatta.]'],
+      ['cura', 'Cura del capo', '[Lavaggio a mano, acqua fredda. Non asciugare in asciugatrice.]']
+    ];
+    const panels = panelData.map(([id, title, body]) => {
+      const isOpen = st.open === id;
+      return {
+        title, body, isOpen,
+        open: isOpen ? 'true' : 'false',
+        sign: isOpen ? '−' : '+',
+        toggle: () => this.setState({ open: isOpen ? null : id })
+      };
+    });
+    return {
+      img0: st.img === 0, img1: st.img === 1, img2: st.img === 2, img3: st.img === 3,
+      thumb0: thumb(0), thumb1: thumb(1), thumb2: thumb(2), thumb3: thumb(3),
+      pick0: () => this.setState({ img: 0 }),
+      pick1: () => this.setState({ img: 1 }),
+      pick2: () => this.setState({ img: 2 }),
+      pick3: () => this.setState({ img: 3 }),
+      sizes,
+      size: st.size,
+      sizeLabel: st.size ? ': ' + st.size : '',
+      error: st.error,
+      added: st.added,
+      cartCount: st.added ? 3 : 2,
+      panels,
+      guideOpen: st.guide,
+      openGuide: () => this.setState({ guide: !st.guide }),
+      add: () => {
+        if (!st.size) this.setState({ error: true, added: false });
+        else this.setState({ added: true, error: false });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+.topRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kicker {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 1;
+}
+
+.newBtn {
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 22px;
+  background: var(--text);
+  color: #000000;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 32px 0;
+}
+
+.summaryCard {
+  text-decoration: none;
+  border: 1px solid var(--border);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--text);
+}
+
+.summaryLabel {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.summaryValue {
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 1;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tab {
+  min-height: 44px;
+  padding: 0 16px;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tabActive {
+  background: var(--text);
+  color: #000000;
+  border-color: var(--text);
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.search input {
+  height: 44px;
+  width: 240px;
+  max-width: 60vw;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0 12px;
+  font-family: inherit;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+}
+
+.table {
+  min-width: 860px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 64px minmax(180px, 2fr) 1fr 0.8fr 2fr 1fr 150px;
+  gap: 16px;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+
+.headRow {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.thumb {
+  width: 64px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: var(--panel-active);
+}
+
+.thumbFaded {
+  opacity: 0.5;
+}
+
+.productName {
+  text-decoration: none;
+}
+
+.category {
+  color: var(--text-2);
+}
+
+.stock {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.stockChip {
+  border: 1px solid var(--border);
+  padding: 3px 7px;
+}
+
+.stockChipEmpty {
+  border-color: var(--error);
+  color: var(--error);
+}
+
+.statusMuted {
+  color: var(--muted);
+}
+
+.statusError {
+  color: var(--error);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.actions a {
+  padding: 12px 8px;
+  font-size: 13px;
+}
+
+.footnote {
+  margin: 16px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}

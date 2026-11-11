@@ -1,0 +1,289 @@
+.header {
+  border-bottom: 1px solid var(--line);
+}
+
+.headerInner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 18px var(--gutter);
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.logo span:first-child {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.logo span:last-child {
+  font-size: 9px;
+  letter-spacing: 0.5em;
+  padding-left: 0.5em;
+}
+
+.main {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 72px var(--gutter) 112px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 64px;
+  align-items: flex-start;
+}
+
+.content {
+  flex: 999 1 560px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.kicker {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title span:first-child {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(44px, 5vw, 72px);
+  line-height: 1;
+}
+
+.titleImpact {
+  font-family: var(--font-impact);
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: 1;
+}
+
+.introText {
+  margin: 0;
+  max-width: 520px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+
+.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stepBar {
+  height: 2px;
+  background: var(--border);
+}
+
+.stepBarOn {
+  background: var(--text);
+}
+
+.stepLabel {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.stepLabelOn {
+  color: var(--text);
+}
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  border-top: 1px solid var(--line);
+  padding-top: 32px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.detailCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.detailLabel {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.bankCard {
+  border: 1px solid var(--border);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bankTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 22px;
+}
+
+.bankRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.bankLabel {
+  color: var(--muted);
+}
+
+.copyBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.igCard {
+  border: 1px solid var(--border);
+  padding: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.igText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.igTitle {
+  font-family: var(--font-display);
+  font-size: 24px;
+}
+
+.igSub {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.summary {
+  flex: 1 1 340px;
+  max-width: 420px;
+  border: 1px solid var(--line);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.summaryTitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.summaryItem {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.summaryItemText {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.summaryItemMeta {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.summaryTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+
+.summaryTotalLabel {
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.summaryTotalValue {
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.shopBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  border: 1px solid var(--text);
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}

@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Admin — Prodotti</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&amp;family=Inter+Tight:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#000}
+a{color:#F2F0ED}a:hover{color:#FFFFFF}
+</style>
+</helmet>
+<div style="background: #000000; color: #F2F0ED; font-family: 'Inter Tight', system-ui, sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-wrap: wrap">
+
+  <!-- Menu laterale -->
+  <nav aria-label="Pannello" style="flex: 1 1 220px; max-width: 100%; border-right: 1px solid #1E1E1E; padding: 28px 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px">
+    <a href="Main.dc.html" style="text-decoration: none; display: flex; flex-direction: column; gap: 2px">
+      <span style="font-family: 'Playfair Display', serif; font-size: 24px; letter-spacing: 0.06em; line-height: 1">SUCCUBUS</span>
+      <span style="font-size: 10px; letter-spacing: 0.3em; color: #A6A29C">PANNELLO</span>
+    </a>
+    <div style="display: flex; flex-wrap: wrap; gap: 4px; font-size: 14px">
+      <a href="Admin-Prodotti.dc.html" aria-current="page" style="flex: 1 1 160px; text-decoration: none; padding: 12px 14px; background: #1A1A1A; border-left: 2px solid #F2F0ED">Prodotti</a>
+      <a href="Admin-Ordini.dc.html" style="flex: 1 1 160px; text-decoration: none; padding: 12px 14px; display: flex; justify-content: space-between">Ordini <span style="background: #F2F0ED; color: #000000; font-size: 12px; font-weight: 500; padding: 1px 7px">3</span></a>
+      <a href="Admin-Prodotti.dc.html" style="flex: 1 1 160px; text-decoration: none; padding: 12px 14px">Lista d’attesa</a>
+      <a href="Admin-Prodotti.dc.html" style="flex: 1 1 160px; text-decoration: none; padding: 12px 14px">Impostazioni</a>
+    </div>
+    <a href="Main.dc.html" style="font-size: 13px; color: #A6A29C; padding: 12px 0">Vedi il negozio ↗</a>
+  </nav>
+
+  <main style="flex: 999 1 640px; min-width: 0; padding: 32px; box-sizing: border-box; display: flex; flex-direction: column; gap: 32px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <span style="font-size: 13px; color: #A6A29C">Ciao [Nome] —</span>
+        <h1 style="margin: 0; font-family: 'Playfair Display', serif; font-weight: 400; font-size: 44px; line-height: 1">Prodotti</h1>
+      </div>
+      <a href="Admin-Prodotto.dc.html" style="display: inline-flex; align-items: center; height: 48px; padding: 0 22px; background: #F2F0ED; color: #000000; text-decoration: none; font-weight: 500; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase">+ Nuovo prodotto</a>
+    </div>
+
+    <!-- Riepilogo -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+      <a href="Admin-Ordini.dc.html" style="text-decoration: none; border: 1px solid #3A3A3A; padding: 20px; display: flex; flex-direction: column; gap: 8px">
+        <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #A6A29C">Da spedire</span>
+        <span style="font-family: 'Playfair Display', serif; font-size: 40px; line-height: 1">[N]</span>
+      </a>
+      <div style="border: 1px solid #3A3A3A; padding: 20px; display: flex; flex-direction: column; gap: 8px">
+        <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #A6A29C">Taglie esaurite</span>
+        <span style="font-family: 'Playfair Display', serif; font-size: 40px; line-height: 1">[N]</span>
+      </div>
+      <div style="border: 1px solid #3A3A3A; padding: 20px; display: flex; flex-direction: column; gap: 8px">
+        <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #A6A29C">Vendite questo mese</span>
+        <span style="font-family: 'Playfair Display', serif; font-size: 40px; line-height: 1">€ [—]</span>
+      </div>
+    </div>
+
+    <!-- Filtri -->
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+      <div role="group" aria-label="Filtra prodotti" style="display: flex; flex-wrap: wrap; gap: 8px">
+        <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+          <button type="button" onClick="{{t.pick}}" aria-pressed="{{t.on}}" style="{{t.style}}">{{t.label}}</button>
+        </sc-for>
+      </div>
+      <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #A6A29C">
+        <span>Cerca</span>
+        <input type="search" placeholder="Nome del prodotto" style="height: 44px; width: 240px; max-width: 60vw; background: transparent; border: 1px solid #3A3A3A; color: #F2F0ED; padding: 0 12px; font-family: inherit; font-size: 14px; box-sizing: border-box">
+      </label>
+    </div>
+
+    <!-- Tabella -->
+    <div style="overflow-x: auto; border: 1px solid #1E1E1E">
+      <div style="min-width: 860px">
+        <div style="display: grid; grid-template-columns: 64px minmax(180px, 2fr) 1fr 0.8fr 2fr 1fr 150px; gap: 16px; align-items: center; padding: 12px 16px; border-bottom: 1px solid #1E1E1E; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #A6A29C">
+          <span></span><span>Prodotto</span><span>Categoria</span><span>Prezzo</span><span>Stock per taglia</span><span>Stato</span><span style="text-align: right">Azioni</span>
+        </div>
+
+        <sc-if value="{{show.harness}}" hint-placeholder-val="{{ true }}">
+          <div style="display: grid; grid-template-columns: 64px minmax(180px, 2fr) 1fr 0.8fr 2fr 1fr 150px; gap: 16px; align-items: center; padding: 12px 16px; border-bottom: 1px solid #1E1E1E; font-size: 14px">
+            <img src="../img/harness.jpg" alt="" style="width: 64px; aspect-ratio: 4 / 5; object-fit: cover">
+            <a href="Admin-Prodotto.dc.html" style="text-decoration: none">Set harness</a>
+            <span style="color: #C4C0BA">Harness</span>
+            <span>€ [—]</span>
+            <span style="display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px"><span style="border: 1px solid #3A3A3A; padding: 3px 7px">XS 2</span><span style="border: 1px solid #3A3A3A; padding: 3px 7px">S 4</span><span style="border: 1px solid #3A3A3A; padding: 3px 7px">M 3</span><span style="border: 1px solid #3A3A3A; padding: 3px 7px">L 1</span><span style="border: 1px solid #FF8F8F; color: #FF8F8F; padding: 3px 7px">XL 0</span></span>
+            <span>Pubblicato</span>
+            <span style="display: flex; justify-content: flex-end; gap: 4px"><a href="Admin-Prodotto.dc.html" style="padding: 12px 8px; font-size: 13px">Modifica</a><button type="button" onClick="{{ask.harness}}" style="background: transparent; border: 0; color: #A6A29C; font-family: inherit; font-size: 13px; text-decoration: underline; padding: 12px 8px; cursor: pointer">Elimina</button></span>
+          </div>
+        </sc-if>
+        <sc-if value="{{show.body}}" hint-placeholder-val="{{ true }}">
+          <div style="display: grid; grid-template-columns: 64px minmax(180px, 2fr) 1fr 0.8fr 2fr 1fr 150px; gap: 16px; align-items: center; padding: 12px 16px; border-bottom: 1px solid #1E1E1E; font-size: 14px">
+            <img src="../img/body.jpg" alt="" style="width: 64px; aspect-ratio: 4 / 5; object-fit: cover">
+            <a href="Admin-Prodotto.dc.html" style="text-decoration: none">Body in tulle</a>
+            <span style="color: #C4C0BA">Body</span>
+            <span>€ [—]</span>
+            <span style="display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px"><span style="border: 1px solid #3A3A3A; padding: 3px 7px">S 5</span><span style="border: 1px solid #3A3A3A; padding: 3px 7px">M 6</span><span style="border: 1px solid #3A3A3A; padding: 3px 7px">L 2</span></span>
+            <span>Pubblicato</span>
+            <span style="display: flex; justify-content: flex-end; gap: 4px"><a href="Admin-Prodotto.dc.html" style="padding: 12px 8px; font-size: 13px">Modifica</a><button type="button" onClick="{{ask.body}}" style="background: transparent; border: 0; color: #A6A29C; font-family: inherit; font-size: 13px; text-decoration: underline; padding: 12px 8px; cursor: pointer">Elimina</button></span>
+          </div>
+        </sc-if>
+        <sc-if value="{{show.rete}}" hint-placeholder-val="{{ true }}">
+          <div style="display: grid; grid-template-columns: 64px minmax(180px, 2fr) 1fr 0.8fr 2fr 1fr 150px; gap: 16px; align-items: center; padding: 12px 16px; border-bottom: 1px solid #1E1E1E; font-size: 14px">
+            <img src="../img/treccia.jpg" alt="" style="width: 64px; aspect-ratio: 4 / 5; object-fit: cover">
+            <a href="Admin-Prodotto.dc.html" style="text-decoration: none">Reggiseno in rete</a>
+            <span style="color: #C4C0BA">Reggiseni</span>
+            <span>€ [—]</span>
+            <span style="display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px"><span style="border: 1px solid #3A3A3A; padding: 3px 7px">S 1</span><span style="border: 1px solid #3A3A3A; padding: 3px 7px">M 2</span><span style="border: 1px solid #FF8F8F; color: #FF8F8F; padding: 3px 7px">L 0</span></span>
+            <span>Pubblicato <span style="display: block; font-size: 12px; color: #A6A29C">Ultimi pezzi</span></span>
+            <span style="display: flex; justify-content: flex-end; gap: 4px"><a href="Admin-Prodotto.dc.html" style="padding: 12px 8px; font-size: 13px">Modifica</a><button type="button" onClick="{{ask.rete}}" style="background: transparent; border: 0; color: #A6A29C; font-family: inherit; font-size: 13px; text-decoration: underline; padding: 12px 8px; cursor: pointer">Elimina</button></span>
+          </div>
+        </sc-if>
+        <sc-if value="{{show.casa}}" hint-placeholder-val="{{ true }}">
+          <div style="display: grid; grid-template-columns: 64px minmax(180px, 2fr) 1fr 0.8fr 2fr 1fr 150px; gap: 16px; align-items: center; padding: 12px 16px; border-bottom: 1px solid #1E1E1E; font-size: 14px">
+            <img src="../img/casa.jpg" alt="" style="width: 64px; aspect-ratio: 4 / 5; object-fit: cover; opacity: 0.5">
+            <a href="Admin-Prodotto.dc.html" style="text-decoration: none">Set con polsini</a>
+            <span style="color: #C4C0BA">Set</span>
+            <span>€ [—]</span>
+            <span style="display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px"><span style="border: 1px solid #FF8F8F; color: #FF8F8F; padding: 3px 7px">S 0</span><span style="border: 1px solid #FF8F8F; color: #FF8F8F; padding: 3px 7px">M 0</span><span style="border: 1px solid #FF8F8F; color: #FF8F8F; padding: 3px 7px">L 0</span></span>
+            <span style="color: #FF8F8F">Esaurito</span>
+            <span style="display: flex; justify-content: flex-end; gap: 4px"><a href="Admin-Prodotto.dc.html" style="padding: 12px 8px; font-size: 13px">Modifica</a><button type="button" onClick="{{ask.casa}}" style="background: transparent; border: 0; color: #A6A29C; font-family: inherit; font-size: 13px; text-decoration: underline; padding: 12px 8px; cursor: pointer">Elimina</button></span>
+          </div>
+        </sc-if>
+        <sc-if value="{{show.daytoday}}" hint-placeholder-val="{{ true }}">
+          <div style="display: grid; grid-template-columns: 64px minmax(180px, 2fr) 1fr 0.8fr 2fr 1fr 150px; gap: 16px; align-items: center; padding: 12px 16px; border-bottom: 1px solid #1E1E1E; font-size: 14px">
+            <img src="../img/tee.jpg" alt="" style="width: 64px; aspect-ratio: 4 / 5; object-fit: cover">
+            <a href="Admin-Prodotto.dc.html" style="text-decoration: none">T-shirt oversize <span style="display: block; font-size: 12px; color: #A6A29C">Day to day</span></a>
+            <span style="color: #C4C0BA">[Categoria]</span>
+            <span>€ [—]</span>
+            <span style="display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px"><span style="border: 1px solid #3A3A3A; padding: 3px 7px">S 10</span><span style="border: 1px solid #3A3A3A; padding: 3px 7px">M 10</span><span style="border: 1px solid #3A3A3A; padding: 3px 7px">L 10</span></span>
+            <span style="color: #A6A29C">Bozza</span>
+            <span style="display: flex; justify-content: flex-end; gap: 4px"><a href="Admin-Prodotto.dc.html" style="padding: 12px 8px; font-size: 13px">Modifica</a><button type="button" onClick="{{ask.daytoday}}" style="background: transparent; border: 0; color: #A6A29C; font-family: inherit; font-size: 13px; text-decoration: underline; padding: 12px 8px; cursor: pointer">Elimina</button></span>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+    <p style="margin: 0; font-size: 12px; color: #A6A29C">Le taglie in rosso sono esaurite. Un prodotto con tutte le taglie a 0 diventa “Esaurito” in automatico nel negozio.</p>
+  </main>
+
+  <!-- Conferma eliminazione -->
+  <sc-if value="{{confirming}}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; padding: 16px">
+      <div role="dialog" aria-modal="true" aria-labelledby="del-title" style="background: #0E0E0E; border: 1px solid #3A3A3A; padding: 28px; max-width: 420px; width: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px">
+        <h2 id="del-title" style="margin: 0; font-family: 'Playfair Display', serif; font-weight: 400; font-size: 26px">Eliminare “{{confirmName}}”?</h2>
+        <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #C4C0BA">Sparisce dal negozio e non si può recuperare. Se vuoi solo nasconderlo, mettilo in Bozza.</p>
+        <div style="display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px">
+          <button type="button" onClick="{{cancel}}" style="height: 44px; padding: 0 18px; background: transparent; border: 1px solid #3A3A3A; color: #F2F0ED; font-family: inherit; font-size: 13px; cursor: pointer">Annulla</button>
+          <button type="button" onClick="{{confirmDelete}}" style="height: 44px; padding: 0 18px; background: #FF8F8F; border: 0; color: #000000; font-family: inherit; font-weight: 500; font-size: 13px; cursor: pointer">Elimina</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1700}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'tutti', deleted: {}, confirm: null };
+  }
+  renderVals() {
+    const st = this.state;
+    const rows = [
+      { id: 'harness', name: 'Set harness', status: 'pub' },
+      { id: 'body', name: 'Body in tulle', status: 'pub' },
+      { id: 'rete', name: 'Reggiseno in rete', status: 'pub' },
+      { id: 'casa', name: 'Set con polsini', status: 'out' },
+      { id: 'daytoday', name: 'T-shirt oversize', status: 'draft' }
+    ];
+    const show = {};
+    const ask = {};
+    rows.forEach((r) => {
+      const matches = st.tab === 'tutti' ||
+        (st.tab === 'pub' && r.status !== 'draft') ||
+        (st.tab === 'draft' && r.status === 'draft') ||
+        (st.tab === 'out' && r.status === 'out');
+      show[r.id] = matches && !st.deleted[r.id];
+      ask[r.id] = () => this.setState({ confirm: r.id });
+    });
+    const base = 'min-height: 44px; padding: 0 16px; font-family: inherit; font-size: 13px; cursor: pointer; ';
+    const tabs = [['tutti', 'Tutti'], ['pub', 'Pubblicati'], ['draft', 'Bozze'], ['out', 'Esauriti']].map(([id, label]) => {
+      const on = st.tab === id;
+      return {
+        label, on: on ? 'true' : 'false',
+        style: base + (on ? 'background: #F2F0ED; color: #000000; border: 1px solid #F2F0ED;' : 'background: transparent; color: #F2F0ED; border: 1px solid #3A3A3A;'),
+        pick: () => this.setState({ tab: id })
+      };
+    });
+    const current = rows.find((r) => r.id === st.confirm);
+    return {
+      show, ask, tabs,
+      confirming: !!st.confirm,
+      confirmName: current ? current.name : '',
+      cancel: () => this.setState({ confirm: null }),
+      confirmDelete: () => this.setState({ deleted: { ...st.deleted, [st.confirm]: true }, confirm: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

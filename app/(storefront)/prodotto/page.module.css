@@ -1,0 +1,16 @@
+.main {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 32px var(--gutter) 112px;
+}
+
+.breadcrumb {
+  margin: 0 0 28px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.breadcrumb a {
+  color: var(--muted);
+}

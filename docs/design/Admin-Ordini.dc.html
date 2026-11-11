@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Admin — Ordini</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&amp;family=Inter+Tight:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#000}
+a{color:#F2F0ED}a:hover{color:#FFFFFF}
+</style>
+</helmet>
+<div style="background: #000000; color: #F2F0ED; font-family: 'Inter Tight', system-ui, sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-wrap: wrap">
+
+  <nav aria-label="Pannello" style="flex: 1 1 220px; max-width: 100%; border-right: 1px solid #1E1E1E; padding: 28px 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px">
+    <a href="Main.dc.html" style="text-decoration: none; display: flex; flex-direction: column; gap: 2px">
+      <span style="font-family: 'Playfair Display', serif; font-size: 24px; letter-spacing: 0.06em; line-height: 1">SUCCUBUS</span>
+      <span style="font-size: 10px; letter-spacing: 0.3em; color: #A6A29C">PANNELLO</span>
+    </a>
+    <div style="display: flex; flex-wrap: wrap; gap: 4px; font-size: 14px">
+      <a href="Admin-Prodotti.dc.html" style="flex: 1 1 160px; text-decoration: none; padding: 12px 14px">Prodotti</a>
+      <a href="Admin-Ordini.dc.html" aria-current="page" style="flex: 1 1 160px; text-decoration: none; padding: 12px 14px; background: #1A1A1A; border-left: 2px solid #F2F0ED; display: flex; justify-content: space-between">Ordini <span style="background: #F2F0ED; color: #000000; font-size: 12px; font-weight: 500; padding: 1px 7px">{{pending}}</span></a>
+      <a href="Admin-Prodotti.dc.html" style="flex: 1 1 160px; text-decoration: none; padding: 12px 14px">Lista d’attesa</a>
+      <a href="Admin-Prodotti.dc.html" style="flex: 1 1 160px; text-decoration: none; padding: 12px 14px">Impostazioni</a>
+    </div>
+  </nav>
+
+  <main style="flex: 999 1 640px; min-width: 0; padding: 32px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px">
+    <h1 style="margin: 0; font-family: 'Playfair Display', serif; font-weight: 400; font-size: 44px; line-height: 1">Ordini</h1>
+
+    <div role="group" aria-label="Filtra ordini" style="display: flex; flex-wrap: wrap; gap: 8px">
+      <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+        <button type="button" onClick="{{t.pick}}" aria-pressed="{{t.on}}" style="{{t.style}}">{{t.label}}</button>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <sc-for list="{{orders}}" as="o" hint-placeholder-count="3">
+        <article style="border: 1px solid #3A3A3A">
+          <button type="button" onClick="{{o.toggle}}" aria-expanded="{{o.expanded}}" style="width: 100%; background: transparent; border: 0; color: #F2F0ED; font-family: inherit; text-align: left; cursor: pointer; padding: 18px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px">
+            <span style="font-size: 15px; font-weight: 400; min-width: 80px">#{{o.num}}</span>
+            <span style="flex: 1 1 180px; font-size: 14px">{{o.customer}} <span style="display: block; font-size: 12px; color: #A6A29C">{{o.date}} · {{o.items}}</span></span>
+            <span style="font-size: 13px; color: #C4C0BA">{{o.pay}}</span>
+            <span style="{{o.badgeStyle}}">{{o.statusLabel}}</span>
+            <span aria-hidden="true" style="font-size: 16px">{{o.sign}}</span>
+          </button>
+          <sc-if value="{{o.open}}" hint-placeholder-val="{{ false }}">
+            <div style="border-top: 1px solid #1E1E1E; padding: 20px; display: flex; flex-wrap: wrap; gap: 24px 40px">
+              <div style="flex: 1 1 240px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; line-height: 1.6">
+                <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #A6A29C">Spedire a</span>
+                <span>{{o.customer}}</span>
+                <span style="color: #C4C0BA">[Via, CAP Città (Provincia)]</span>
+                <span style="color: #C4C0BA">[Telefono]</span>
+                <span style="margin-top: 8px; align-self: flex-start; border: 1px solid #F2F0ED; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 8px">Imballo discreto</span>
+              </div>
+              <div style="flex: 1 1 240px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; line-height: 1.6">
+                <span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #A6A29C">Articoli</span>
+                <span style="white-space: pre-line">{{o.lines}}</span>
+                <span style="color: #C4C0BA">Totale € [—] · {{o.ship}}</span>
+              </div>
+              <div style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 10px">
+                <sc-if value="{{o.needsPayment}}" hint-placeholder-val="{{ false }}">
+                  <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #C4C0BA">In attesa del bonifico. Le taglie restano riservate per [N] giorni.</p>
+                  <button type="button" onClick="{{o.markPaid}}" style="height: 48px; background: #F2F0ED; border: 0; color: #000000; font-family: inherit; font-weight: 500; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer">Bonifico ricevuto</button>
+                </sc-if>
+                <sc-if value="{{o.needsShipping}}" hint-placeholder-val="{{ false }}">
+                  <label for="tracking" style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #A6A29C">Numero di tracking</label>
+                  <input id="tracking" style="height: 48px; background: transparent; border: 1px solid #3A3A3A; color: #F2F0ED; padding: 0 14px; font-family: inherit; font-size: 15px; box-sizing: border-box">
+                  <button type="button" onClick="{{o.markShipped}}" style="height: 48px; background: #F2F0ED; border: 0; color: #000000; font-family: inherit; font-weight: 500; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer">Segna come spedito</button>
+                  <span style="font-size: 12px; color: #A6A29C">La cliente riceve un’email con il link di tracking.</span>
+                </sc-if>
+                <sc-if value="{{o.isShipped}}" hint-placeholder-val="{{ false }}">
+                  <p style="margin: 0; font-size: 14px">Spedito · tracking [CODICE]</p>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+        </article>
+      </sc-for>
+      <sc-if value="{{none}}" hint-placeholder-val="{{ false }}">
+        <p style="margin: 0; padding: 40px 0; text-align: center; font-size: 14px; color: #A6A29C">Nessun ordine qui.</p>
+      </sc-if>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1600}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tab: 'tutti',
+      open: '1042',
+      orders: [
+        { num: '1042', customer: '[Cliente A]', date: 'oggi', items: '2 articoli', pay: 'PayPal', status: 'ship', lines: 'Set harness — M × 1\nCollare con guinzaglio × 1', ship: 'Standard 24/48h' },
+        { num: '1041', customer: '[Cliente B]', date: 'ieri', items: '1 articolo', pay: 'Bonifico', status: 'pay', lines: 'Body in tulle — S × 1', ship: 'Standard 24/48h' },
+        { num: '1040', customer: '[Cliente C]', date: '[data]', items: '1 articolo', pay: 'PayPal', status: 'ship', lines: 'Reggiseno in rete — M × 1', ship: 'Express' },
+        { num: '1039', customer: '[Cliente D]', date: '[data]', items: '3 articoli', pay: 'PayPal', status: 'done', lines: 'Set in rete con reggicalze — S × 1\nPolsini in pelle × 2', ship: 'Europa' }
+      ]
+    };
+  }
+  setStatus(num, status) {
+    this.setState({ orders: this.state.orders.map((o) => o.num === num ? { ...o, status } : o) });
+  }
+  renderVals() {
+    const st = this.state;
+    const labels = { pay: 'Da pagare', ship: 'Da spedire', done: 'Spedito' };
+    const badge = {
+      pay: 'border: 1px solid #FF8F8F; color: #FF8F8F;',
+      ship: 'background: #F2F0ED; color: #000000; border: 1px solid #F2F0ED;',
+      done: 'border: 1px solid #3A3A3A; color: #A6A29C;'
+    };
+    const visible = st.orders.filter((o) => st.tab === 'tutti' || o.status === st.tab);
+    const orders = visible.map((o) => {
+      const open = st.open === o.num;
+      return {
+        ...o, open,
+        expanded: open ? 'true' : 'false',
+        sign: open ? '−' : '+',
+        statusLabel: labels[o.status],
+        badgeStyle: 'font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 9px; ' + badge[o.status],
+        needsPayment: o.status === 'pay',
+        needsShipping: o.status === 'ship',
+        isShipped: o.status === 'done',
+        toggle: () => this.setState({ open: open ? null : o.num }),
+        markPaid: () => this.setStatus(o.num, 'ship'),
+        markShipped: () => this.setStatus(o.num, 'done')
+      };
+    });
+    const count = (s) => st.orders.filter((o) => o.status === s).length;
+    const base = 'min-height: 44px; padding: 0 16px; font-family: inherit; font-size: 13px; cursor: pointer; ';
+    const tabs = [['tutti', 'Tutti'], ['pay', 'Da pagare (' + count('pay') + ')'], ['ship', 'Da spedire (' + count('ship') + ')'], ['done', 'Spediti']].map(([id, label]) => {
+      const on = st.tab === id;
+      return {
+        label, on: on ? 'true' : 'false',
+        style: base + (on ? 'background: #F2F0ED; color: #000000; border: 1px solid #F2F0ED;' : 'background: transparent; color: #F2F0ED; border: 1px solid #3A3A3A;'),
+        pick: () => this.setState({ tab: id })
+      };
+    });
+    return { orders, tabs, none: orders.length === 0, pending: count('pay') + count('ship') };
+  }
+}
+</script>
+</body>
+</html>

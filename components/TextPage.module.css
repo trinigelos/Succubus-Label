@@ -1,0 +1,56 @@
+.main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 96px var(--gutter) 112px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.kicker {
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 1.05;
+}
+
+.intro {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--text-2);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-2);
+}
+
+.body h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.body p {
+  margin: 0;
+}
+
+.pending {
+  color: var(--disabled);
+  font-style: italic;
+}

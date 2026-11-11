@@ -1,0 +1,32 @@
+.form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.input {
+  height: 40px;
+  min-width: 0;
+  flex: 1 1 auto;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  padding: 0 2px;
+}
+
+.button {
+  flex: 0 0 auto;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 10px 0;
+  white-space: nowrap;
+}

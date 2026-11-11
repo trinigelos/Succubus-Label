@@ -1,0 +1,37 @@
+{
+  "name": "succubus-label",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "serve": "npx --yes serve out",
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "db:seed": "tsx --env-file-if-exists=.env.local scripts/seed.ts"
+  },
+  "dependencies": {
+    "@react-email/components": "^1.0.12",
+    "@supabase/supabase-js": "^2.119.0",
+    "browser-image-compression": "^2.0.2",
+    "next": "16.4.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.0",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6.3.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.5",
+    "happy-dom": "^21.0.4",
+    "supabase": "3.0.0",
+    "tsx": "^4.23.15",
+    "typescript": "^5",
+    "vitest": "^5.1.0"
+  }
+}

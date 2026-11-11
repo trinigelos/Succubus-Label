@@ -1,0 +1,96 @@
+.row {
+  display: flex;
+  gap: 16px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+}
+
+.image {
+  flex: 0 0 90px;
+  display: block;
+  width: 90px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: var(--panel-active);
+}
+
+.info {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.name {
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 18px;
+}
+
+.size {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.price {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+}
+
+.stepper button {
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.stepper button:disabled {
+  color: var(--disabled);
+  cursor: not-allowed;
+}
+
+.stepper span {
+  min-width: 28px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.remove {
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  padding: 10px 0;
+}

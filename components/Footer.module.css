@@ -1,0 +1,73 @@
+.footer {
+  border-top: 1px solid var(--line);
+}
+
+.inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 64px var(--gutter) 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 32px;
+  font-size: 14px;
+  line-height: 2;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandCol {
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.logoMain {
+  font-family: var(--font-display);
+  font-size: 30px;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.logoSub {
+  font-size: 9px;
+  letter-spacing: 0.5em;
+  line-height: 1.6;
+}
+
+.claim {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  margin-top: 8px;
+}
+
+.colTitle {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.col a {
+  text-decoration: none;
+}
+
+.legal {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.legalLine {
+  margin: 0;
+  font-size: 12px;
+  color: var(--disabled);
+}

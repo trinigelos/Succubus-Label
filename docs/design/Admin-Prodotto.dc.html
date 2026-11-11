@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Admin — Modifica prodotto</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&amp;family=Inter+Tight:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#000}
+a{color:#F2F0ED}a:hover{color:#FFFFFF}
+</style>
+</helmet>
+<div style="background: #000000; color: #F2F0ED; font-family: 'Inter Tight', system-ui, sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-wrap: wrap">
+
+  <nav aria-label="Pannello" style="flex: 1 1 220px; max-width: 100%; border-right: 1px solid #1E1E1E; padding: 28px 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px">
+    <a href="Main.dc.html" style="text-decoration: none; display: flex; flex-direction: column; gap: 2px">
+      <span style="font-family: 'Playfair Display', serif; font-size: 24px; letter-spacing: 0.06em; line-height: 1">SUCCUBUS</span>
+      <span style="font-size: 10px; letter-spacing: 0.3em; color: #A6A29C">PANNELLO</span>
+    </a>
+    <div style="display: flex; flex-wrap: wrap; gap: 4px; font-size: 14px">
+      <a href="Admin-Prodotti.dc.html" aria-current="page" style="flex: 1 1 160px; text-decoration: none; padding: 12px 14px; background: #1A1A1A; border-left: 2px solid #F2F0ED">Prodotti</a>
+      <a href="Admin-Ordini.dc.html" style="flex: 1 1 160px; text-decoration: none; padding: 12px 14px; display: flex; justify-content: space-between">Ordini <span style="background: #F2F0ED; color: #000000; font-size: 12px; font-weight: 500; padding: 1px 7px">3</span></a>
+      <a href="Admin-Prodotti.dc.html" style="flex: 1 1 160px; text-decoration: none; padding: 12px 14px">Lista d’attesa</a>
+      <a href="Admin-Prodotti.dc.html" style="flex: 1 1 160px; text-decoration: none; padding: 12px 14px">Impostazioni</a>
+    </div>
+  </nav>
+
+  <main style="flex: 999 1 640px; min-width: 0; padding: 32px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <a href="Admin-Prodotti.dc.html" style="font-size: 13px; color: #A6A29C; padding: 4px 0">← Prodotti</a>
+        <h1 style="margin: 0; font-family: 'Playfair Display', serif; font-weight: 400; font-size: 40px; line-height: 1">{{titleText}}</h1>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px">
+        <button type="button" onClick="{{saveDraft}}" style="height: 48px; padding: 0 20px; background: transparent; border: 1px solid #3A3A3A; color: #F2F0ED; font-family: inherit; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer">Salva bozza</button>
+        <button type="button" onClick="{{publish}}" style="height: 48px; padding: 0 22px; background: #F2F0ED; border: 0; color: #000000; font-family: inherit; font-weight: 500; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer">Pubblica</button>
+      </div>
+    </div>
+    <sc-if value="{{saved}}" hint-placeholder-val="{{ false }}">
+      <p role="status" style="margin: 0; border: 1px solid #3A3A3A; padding: 14px 16px; font-size: 14px">{{savedText}}</p>
+    </sc-if>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+      <form style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 28px">
+
+        <!-- Foto -->
+        <section style="border: 1px solid #1E1E1E; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+          <h2 style="margin: 0; font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase">Foto</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px">
+            <div style="position: relative">
+              <img src="../img/harness.jpg" alt="Foto 1" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover">
+              <span style="position: absolute; left: 6px; bottom: 6px; background: #F2F0ED; color: #000000; font-size: 11px; font-weight: 500; padding: 3px 6px">Copertina</span>
+              <button type="button" aria-label="Rimuovi foto 1" style="position: absolute; top: 4px; right: 4px; width: 36px; height: 36px; background: rgba(0, 0, 0, 0.75); border: 0; color: #F2F0ED; font-size: 16px; cursor: pointer">×</button>
+            </div>
+            <div style="position: relative">
+              <img src="../img/collare.jpg" alt="Foto 2" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover">
+              <button type="button" aria-label="Rimuovi foto 2" style="position: absolute; top: 4px; right: 4px; width: 36px; height: 36px; background: rgba(0, 0, 0, 0.75); border: 0; color: #F2F0ED; font-size: 16px; cursor: pointer">×</button>
+            </div>
+            <div style="position: relative">
+              <img src="../img/polsino.jpg" alt="Foto 3" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover">
+              <button type="button" aria-label="Rimuovi foto 3" style="position: absolute; top: 4px; right: 4px; width: 36px; height: 36px; background: rgba(0, 0, 0, 0.75); border: 0; color: #F2F0ED; font-size: 16px; cursor: pointer">×</button>
+            </div>
+            <label style="aspect-ratio: 4 / 5; border: 1px dashed #4A4A4A; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; padding: 8px; box-sizing: border-box; cursor: pointer; font-size: 13px; color: #C4C0BA">
+              <span aria-hidden="true" style="font-size: 26px; line-height: 1">+</span>
+              <span>Aggiungi foto<br>o trascinale qui</span>
+              <input type="file" accept="image/*" multiple style="position: absolute; width: 1px; height: 1px; opacity: 0">
+            </label>
+          </div>
+          <p style="margin: 0; font-size: 12px; color: #A6A29C">Trascina per cambiare l’ordine. La prima è la copertina. Formato verticale 4:5, almeno 1600 px di larghezza.</p>
+        </section>
+
+        <!-- Informazioni -->
+        <section style="border: 1px solid #1E1E1E; padding: 24px; display: flex; flex-direction: column; gap: 18px">
+          <h2 style="margin: 0; font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase">Informazioni</h2>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <label for="nome" style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #A6A29C">Nome</label>
+            <input id="nome" value="{{name}}" onChange="{{setName}}" style="height: 48px; background: transparent; border: 1px solid #3A3A3A; color: #F2F0ED; padding: 0 14px; font-family: inherit; font-size: 15px; box-sizing: border-box">
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <label for="descr" style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #A6A29C">Descrizione</label>
+            <textarea id="descr" rows="4" style="background: transparent; border: 1px solid #3A3A3A; color: #F2F0ED; padding: 12px 14px; font-family: inherit; font-size: 15px; line-height: 1.6; resize: vertical">[Come veste, con cosa abbinarlo, per chi è.]</textarea>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px">
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <label for="linea" style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #A6A29C">Linea</label>
+              <select id="linea" style="height: 48px; background: #000000; border: 1px solid #3A3A3A; color: #F2F0ED; padding: 0 12px; font-family: inherit; font-size: 15px"><option>Lingerie</option><option>Day to day</option></select>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <label for="cat" style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #A6A29C">Categoria</label>
+              <select id="cat" style="height: 48px; background: #000000; border: 1px solid #3A3A3A; color: #F2F0ED; padding: 0 12px; font-family: inherit; font-size: 15px"><option>Harness</option><option>Set</option><option>Body</option><option>Reggiseni</option><option>Accessori</option><option>+ Nuova categoria…</option></select>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <label for="prezzo" style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #A6A29C">Prezzo (€, IVA incl.)</label>
+              <input id="prezzo" inputmode="decimal" value="{{price}}" onChange="{{setPrice}}" style="height: 48px; background: transparent; border: 1px solid #3A3A3A; color: #F2F0ED; padding: 0 14px; font-family: inherit; font-size: 15px; box-sizing: border-box">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <label for="sconto" style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #A6A29C">Prezzo scontato (facoltativo)</label>
+              <input id="sconto" inputmode="decimal" style="height: 48px; background: transparent; border: 1px solid #3A3A3A; color: #F2F0ED; padding: 0 14px; font-family: inherit; font-size: 15px; box-sizing: border-box">
+            </div>
+          </div>
+        </section>
+
+        <!-- Taglie e stock -->
+        <section style="border: 1px solid #1E1E1E; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px">
+            <h2 style="margin: 0; font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase">Taglie e stock</h2>
+            <span style="font-size: 13px; color: #A6A29C">Totale: {{total}} pezzi</span>
+          </div>
+          <sc-for list="{{sizes}}" as="s" hint-placeholder-count="5">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; border-top: 1px solid #1E1E1E">
+              <label style="display: flex; align-items: center; gap: 12px; font-size: 15px; cursor: pointer; min-width: 120px">
+                <input type="checkbox" checked="{{s.active}}" onChange="{{s.toggle}}" style="width: 18px; height: 18px; margin: 0; accent-color: #F2F0ED">
+                <span>{{s.label}}</span>
+              </label>
+              <sc-if value="{{s.active}}" hint-placeholder-val="{{ true }}">
+                <div style="display: flex; align-items: center; gap: 12px">
+                  <span style="font-size: 12px; color: #FF8F8F">{{s.warn}}</span>
+                  <div role="group" aria-label="{{s.aria}}" style="display: flex; align-items: center; border: 1px solid #3A3A3A">
+                    <button type="button" onClick="{{s.dec}}" aria-label="Meno" style="width: 44px; height: 44px; background: transparent; border: 0; color: #F2F0ED; font-size: 18px; cursor: pointer">−</button>
+                    <span aria-live="polite" style="min-width: 40px; text-align: center; font-size: 15px">{{s.qty}}</span>
+                    <button type="button" onClick="{{s.inc}}" aria-label="Più" style="width: 44px; height: 44px; background: transparent; border: 0; color: #F2F0ED; font-size: 18px; cursor: pointer">+</button>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+          <label style="display: flex; align-items: center; gap: 12px; font-size: 14px; cursor: pointer; border-top: 1px solid #1E1E1E; padding-top: 14px">
+            <input type="checkbox" style="width: 18px; height: 18px; margin: 0; accent-color: #F2F0ED">
+            <span>Taglia unica (accessori)</span>
+          </label>
+        </section>
+
+        <!-- Dettagli -->
+        <section style="border: 1px solid #1E1E1E; padding: 24px; display: flex; flex-direction: column; gap: 18px">
+          <h2 style="margin: 0; font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase">Dettagli</h2>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <label for="mat" style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #A6A29C">Materiali</label>
+            <input id="mat" placeholder="Es. ecopelle, rete elastica" style="height: 48px; background: transparent; border: 1px solid #3A3A3A; color: #F2F0ED; padding: 0 14px; font-family: inherit; font-size: 15px; box-sizing: border-box">
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <label for="cura" style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #A6A29C">Cura del capo</label>
+            <input id="cura" placeholder="Es. lavaggio a mano in acqua fredda" style="height: 48px; background: transparent; border: 1px solid #3A3A3A; color: #F2F0ED; padding: 0 14px; font-family: inherit; font-size: 15px; box-sizing: border-box">
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <label for="look" style="font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #A6A29C">Completa il look (fino a 4 prodotti)</label>
+            <select id="look" style="height: 48px; background: #000000; border: 1px solid #3A3A3A; color: #F2F0ED; padding: 0 12px; font-family: inherit; font-size: 15px"><option>Collare con guinzaglio, Polsini in pelle</option></select>
+          </div>
+        </section>
+
+        <button type="button" style="align-self: flex-start; background: transparent; border: 0; color: #FF8F8F; font-family: inherit; font-size: 14px; text-decoration: underline; padding: 12px 0; cursor: pointer">Elimina prodotto</button>
+      </form>
+
+      <!-- Anteprima -->
+      <aside aria-label="Anteprima nel negozio" style="flex: 1 1 280px; max-width: 360px; display: flex; flex-direction: column; gap: 14px">
+        <span style="font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #A6A29C">Anteprima nel negozio</span>
+        <div style="position: relative">
+          <img src="../img/harness.jpg" alt="" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover">
+          <span style="position: absolute; top: 12px; left: 12px; background: #F2F0ED; color: #000000; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 9px">{{badge}}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; gap: 12px; font-size: 14px"><span>{{name}}</span><span>€ {{price}}</span></div>
+        <span style="font-size: 12px; color: #A6A29C">{{sizeLine}}</span>
+        <div style="border-top: 1px solid #1E1E1E; padding-top: 14px; display: flex; justify-content: space-between; font-size: 13px">
+          <span style="color: #A6A29C">Stato</span><span>{{statusText}}</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2300}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: 'Set harness',
+      price: '[—]',
+      status: 'pub',
+      saved: null,
+      sizes: [
+        { label: 'XS', active: true, qty: 2 },
+        { label: 'S', active: true, qty: 4 },
+        { label: 'M', active: true, qty: 3 },
+        { label: 'L', active: true, qty: 1 },
+        { label: 'XL', active: true, qty: 0 }
+      ]
+    };
+  }
+  update(i, patch) {
+    const sizes = this.state.sizes.map((s, j) => j === i ? { ...s, ...patch } : s);
+    this.setState({ sizes, saved: null });
+  }
+  renderVals() {
+    const st = this.state;
+    const sizes = st.sizes.map((s, i) => ({
+      ...s,
+      aria: 'Stock taglia ' + s.label,
+      warn: s.qty === 0 ? 'Esaurita' : (s.qty <= 2 ? 'Quasi finita' : ''),
+      toggle: () => this.update(i, { active: !s.active }),
+      inc: () => this.update(i, { qty: s.qty + 1 }),
+      dec: () => this.update(i, { qty: Math.max(0, s.qty - 1) })
+    }));
+    const active = st.sizes.filter((s) => s.active);
+    const total = active.reduce((n, s) => n + s.qty, 0);
+    const avail = active.filter((s) => s.qty > 0).map((s) => s.label);
+    let badge = 'Nuovo';
+    if (total === 0) badge = 'Esaurito';
+    else if (total <= 3) badge = 'Ultimi pezzi';
+    return {
+      name: st.name,
+      price: st.price,
+      titleText: st.name ? st.name : 'Nuovo prodotto',
+      setName: (e) => this.setState({ name: e.target.value, saved: null }),
+      setPrice: (e) => this.setState({ price: e.target.value, saved: null }),
+      sizes, total, badge,
+      sizeLine: avail.length ? avail.join(' · ') : 'Nessuna taglia disponibile',
+      statusText: st.status === 'pub' ? 'Pubblicato' : 'Bozza (non visibile)',
+      saved: !!st.saved,
+      savedText: st.saved === 'pub' ? 'Pubblicato. È già visibile nel negozio.' : 'Bozza salvata. Non è visibile nel negozio.',
+      saveDraft: () => this.setState({ status: 'draft', saved: 'draft' }),
+      publish: () => this.setState({ status: 'pub', saved: 'pub' })
+    };
+  }
+}
+</script>
+</body>
+</html>
