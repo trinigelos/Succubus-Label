@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CartProvider } from "@/lib/cart/CartContext";
+import { withBasePath } from "@/lib/base-path";
 import { fontBody, fontDisplay, fontImpact } from "./fonts";
 import "./globals.css";
 
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
     siteName: "Succubus Label",
     title,
     description,
-    images: ["/img/casa.jpg"],
+    images: [withBasePath("/img/casa.jpg")],
   },
 };
 

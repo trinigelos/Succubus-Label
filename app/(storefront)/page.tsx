@@ -3,6 +3,7 @@
 import { ProductTile } from "@/components/shop/ProductTile";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { getFeaturedProducts } from "@/lib/data/products";
+import { withBasePath } from "@/lib/base-path";
 import type { Product } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -39,21 +40,21 @@ export default function Home() {
         </div>
         <div className={styles.heroImages}>
           <Image
-            src="/img/casa.jpg"
+            src={withBasePath("/img/casa.jpg")}
             alt="Lingerie nera in una casa abbandonata"
             width={800}
             height={1000}
             priority
           />
           <Image
-            src="/img/graffiti.jpg"
+            src={withBasePath("/img/graffiti.jpg")}
             alt="Set in rete nera con collare, luce viola"
             width={800}
             height={1000}
             priority
           />
           <Image
-            src="/img/tramonto.jpg"
+            src={withBasePath("/img/tramonto.jpg")}
             alt="Reggiseno nero al tramonto"
             width={800}
             height={1000}
@@ -121,19 +122,19 @@ export default function Home() {
           </div>
           <div className={styles.daytodayImages}>
             <Image
-              src="/img/tee.jpg"
+              src={withBasePath("/img/tee.jpg")}
               alt="Lei con una t-shirt nera oversize Succubus"
               width={400}
               height={533}
             />
             <Image
-              src="/img/onlyblack.jpg"
+              src={withBasePath("/img/onlyblack.jpg")}
               alt="Selfie allo specchio, tutta in nero"
               width={400}
               height={533}
             />
             <Image
-              src="/img/serious.jpg"
+              src={withBasePath("/img/serious.jpg")}
               alt="Selfie allo specchio con abito nero corto"
               width={400}
               height={533}
@@ -145,7 +146,7 @@ export default function Home() {
       <section id="chi" className={styles.chi}>
         <div className={styles.chiInner}>
           <Image
-            src="/img/candele.jpg"
+            src={withBasePath("/img/candele.jpg")}
             alt="Di spalle, maglione nero e candele accese"
             width={520}
             height={650}
@@ -172,7 +173,7 @@ export default function Home() {
       <section className={styles.details}>
         <div className={styles.detailCard}>
           <Image
-            src="/img/gatto.jpg"
+            src={withBasePath("/img/gatto.jpg")}
             alt="Gatto nero accanto al cartellino Succubus"
             width={400}
             height={400}
@@ -184,7 +185,7 @@ export default function Home() {
         </div>
         <div className={styles.detailCard}>
           <Image
-            src="/img/polsino.jpg"
+            src={withBasePath("/img/polsino.jpg")}
             alt="Polsino in pelle nera"
             width={400}
             height={400}
@@ -196,7 +197,7 @@ export default function Home() {
         </div>
         <div className={styles.detailCard}>
           <Image
-            src="/img/ciliegie.jpg"
+            src={withBasePath("/img/ciliegie.jpg")}
             alt="Ombra di una mano con ciliegie su un muro arancione"
             width={400}
             height={400}
@@ -220,7 +221,7 @@ export default function Home() {
             {INSTAGRAM_PHOTOS.map((photo) => (
               <Image
                 key={photo.file}
-                src={`/img/${photo.file}`}
+                src={withBasePath(`/img/${photo.file}`)}
                 alt={photo.alt}
                 width={340}
                 height={425}

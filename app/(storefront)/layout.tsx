@@ -1,6 +1,7 @@
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { withBasePath } from "@/lib/base-path";
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -8,7 +9,7 @@ const organizationJsonLd = {
   name: "Succubus Label",
   description: "The black label of lingerie — Intimates & noir aesthetics.",
   url: process.env.SHOP_URL ?? "http://localhost:3000",
-  logo: `${process.env.SHOP_URL ?? "http://localhost:3000"}/img/casa.jpg`,
+  logo: `${process.env.SHOP_URL ?? "http://localhost:3000"}${withBasePath("/img/casa.jpg")}`,
   sameAs: ["https://www.instagram.com/succubus.label_17.10/"],
 };
 
