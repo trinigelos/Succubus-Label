@@ -1,31 +1,41 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import { CartTrigger } from "./CartTrigger";
 import styles from "./Header.module.css";
+import { MenuPanel } from "./MenuPanel";
 
 export function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <>
       <div className={styles.announcement}>
-        Spedizioni 24/48h · Day to day in arrivo presto
+        Spedizione sempre Express · Day to day in arrivo presto
       </div>
       <header className={styles.header}>
-        <nav aria-label="Principale" className={styles.nav}>
-          <div className={styles.links}>
-            <Link href="/shop">Lingerie</Link>
-            <Link href="/#daytoday">Day to day</Link>
-            <Link href="/shop?categoria=harness">Harness</Link>
-          </div>
+        <div className={styles.nav}>
+          <button
+            type="button"
+            className={styles.menuBtn}
+            aria-expanded={menuOpen}
+            aria-controls="menu-panel"
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            <span aria-hidden="true">☰</span>
+            <span className={styles.menuBtnLabel}>Menu</span>
+          </button>
           <Link href="/" className={styles.logo}>
             <span className={styles.logoMain}>SUCCUBUS</span>
             <span className={styles.logoSub}>LABEL</span>
           </Link>
-          <div className={styles.links}>
-            <Link href="/#chi">Chi sono</Link>
-            <Link href="/#contatti">Contatti</Link>
+          <div className={styles.right}>
             <CartTrigger />
           </div>
-        </nav>
+        </div>
       </header>
+      <MenuPanel open={menuOpen} onClose={() => setMenuOpen(false)} />
     </>
   );
 }

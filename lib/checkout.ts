@@ -43,6 +43,11 @@ export async function reserveOrder(
     if (error.message.includes("EMPTY_CART")) {
       throw new CheckoutError("Il carrello è vuoto.");
     }
+    if (error.message.includes("HAND_DELIVERY_NOT_AVAILABLE")) {
+      throw new CheckoutError(
+        "La consegna a mano non è disponibile per questo CAP."
+      );
+    }
     throw new CheckoutError("Impossibile creare l'ordine.", 500);
   }
 

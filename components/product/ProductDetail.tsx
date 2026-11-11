@@ -34,9 +34,13 @@ export function ProductDetail({ product }: { product: Product }) {
     openDrawer();
   }
 
+  const careText = [product.care_tags.join(" · "), product.care_note]
+    .filter(Boolean)
+    .join(". ");
+
   const panels = [
     { id: "dettagli", title: "Dettagli e materiali", body: product.materials },
-    { id: "cura", title: "Cura del capo", body: product.care },
+    { id: "cura", title: "Cura del capo", body: careText || null },
   ].filter((p) => p.body);
 
   return (
@@ -77,7 +81,21 @@ export function ProductDetail({ product }: { product: Product }) {
               {label === "nuovo" ? " · Nuovo" : ""}
             </span>
             <h1 className={styles.name}>{product.name}</h1>
-            <p className={styles.price}>{formatCents(product.price_cents)}</p>
+            <p className={styles.price}>
+              {product.compare_at_cents ? (
+                <span
+                  style={{
+                    color: "var(--muted)",
+                    textDecoration: "line-through",
+                    marginRight: 10,
+                    fontSize: "0.7em",
+                  }}
+                >
+                  {formatCents(product.compare_at_cents)}
+                </span>
+              ) : null}
+              {formatCents(product.price_cents)}
+            </p>
             <p className={styles.vat}>IVA inclusa.</p>
           </div>
 
@@ -148,8 +166,8 @@ export function ProductDetail({ product }: { product: Product }) {
               </div>
             ) : null}
             <ul className={styles.bullets}>
-              <li>— Spedizione 24/48h in imballo discreto</li>
-              <li>— Pagamento sicuro con PayPal (anche con carta) o bonifico</li>
+              <li>— Spedizione sempre Express, in imballo discreto</li>
+              <li>— Confermiamo l&apos;ordine e il pagamento via WhatsApp</li>
               <li>
                 — Per igiene, l&apos;intimo si restituisce solo con la
                 protezione intatta

@@ -1,0 +1,24 @@
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+  overflow-x: auto;
+}
+
+.chip {
+  white-space: nowrap;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-2);
+  border: 1px solid var(--border);
+  padding: 10px 16px;
+}
+
+.chipActive {
+  background: var(--text);
+  border-color: var(--text);
+  color: #000000;
+}

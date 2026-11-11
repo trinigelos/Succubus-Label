@@ -20,10 +20,12 @@ type CartContextValue = {
   count: number;
   subtotalCents: number;
   isDrawerOpen: boolean;
+  showUpsell: boolean;
   discreetPackaging: boolean;
   freeShippingThresholdCents: number | null;
   openDrawer: () => void;
   closeDrawer: () => void;
+  closeUpsell: () => void;
   addItem: (variantId: string, qty?: number) => void;
   setQty: (variantId: string, qty: number) => void;
   removeItem: (variantId: string) => void;
@@ -35,6 +37,15 @@ const CartContext = createContext<CartContextValue | null>(null);
 
 const STORAGE_KEY = "succubus-cart";
 const DISCREET_KEY = "succubus-cart-discreet";
+const UPSELL_SHOWN_KEY = "succubus-upsell-shown";
+
+function readUpsellShown(): boolean {
+  try {
+    return window.sessionStorage.getItem(UPSELL_SHOWN_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
 
 function readStoredItems(): CartItem[] {
   try {
@@ -60,6 +71,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>(() => readStoredItems());
   const [lines, setLines] = useState<(CartLine & { qty: number })[]>([]);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [showUpsell, setShowUpsell] = useState(false);
+  const [upsellShown, setUpsellShown] = useState(() => readUpsellShown());
   const [discreetPackaging, setDiscreetPackagingState] = useState(() =>
     readStoredDiscreet()
   );
@@ -117,18 +130,38 @@ export function CartProvider({ children }: { children: ReactNode }) {
     };
   }, [items]);
 
-  const addItem = useCallback((variantId: string, qty = 1) => {
-    setItems((prev) => {
-      const existing = prev.find((i) => i.variantId === variantId);
-      if (existing) {
-        return prev.map((i) =>
-          i.variantId === variantId ? { ...i, qty: i.qty + qty } : i
-        );
+  // Opens the cart: the first time in a session, shows the "Aggiungi anche"
+  // upsell modal instead (CAMBIOS §5); the modal opens the drawer once it's
+  // dismissed (or finds nothing to suggest).
+  const triggerOpenDrawer = useCallback(() => {
+    if (!upsellShown) {
+      setShowUpsell(true);
+      setUpsellShown(true);
+      try {
+        window.sessionStorage.setItem(UPSELL_SHOWN_KEY, "true");
+      } catch {
+        // sessionStorage no disponible: el modal se mostrará de nuevo
       }
-      return [...prev, { variantId, qty }];
-    });
+      return;
+    }
     setDrawerOpen(true);
-  }, []);
+  }, [upsellShown]);
+
+  const addItem = useCallback(
+    (variantId: string, qty = 1) => {
+      setItems((prev) => {
+        const existing = prev.find((i) => i.variantId === variantId);
+        if (existing) {
+          return prev.map((i) =>
+            i.variantId === variantId ? { ...i, qty: i.qty + qty } : i
+          );
+        }
+        return [...prev, { variantId, qty }];
+      });
+      triggerOpenDrawer();
+    },
+    [triggerOpenDrawer]
+  );
 
   const setQty = useCallback((variantId: string, qty: number) => {
     setItems((prev) =>
@@ -154,10 +187,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
     count,
     subtotalCents,
     isDrawerOpen,
+    showUpsell,
     discreetPackaging,
     freeShippingThresholdCents,
-    openDrawer: () => setDrawerOpen(true),
+    openDrawer: triggerOpenDrawer,
     closeDrawer: () => setDrawerOpen(false),
+    closeUpsell: () => {
+      setShowUpsell(false);
+      setDrawerOpen(true);
+    },
     addItem,
     setQty,
     removeItem,

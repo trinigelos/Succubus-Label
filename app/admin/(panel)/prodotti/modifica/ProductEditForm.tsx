@@ -11,6 +11,7 @@ import {
   updateProduct,
   uploadProductImages,
 } from "@/lib/data/admin-mutations";
+import { CARE_TAGS } from "@/lib/care-tags";
 import { imageUrl, productLabel } from "@/lib/data/product-helpers";
 import { formatCents } from "@/lib/format";
 import type { Category, Product, ProductImage } from "@/lib/types";
@@ -56,8 +57,17 @@ export function ProductEditForm({
     product.compare_at_cents ? (product.compare_at_cents / 100).toFixed(2) : ""
   );
   const [materials, setMaterials] = useState(product.materials ?? "");
-  const [care, setCare] = useState(product.care ?? "");
+  const [careTags, setCareTags] = useState<string[]>(product.care_tags ?? []);
+  const [careNote, setCareNote] = useState(product.care_note ?? "");
+  const [isOutlet, setIsOutlet] = useState(product.is_outlet ?? false);
+  const [collection, setCollection] = useState(product.collection ?? "");
   const [relatedIds, setRelatedIds] = useState<string[]>(initialRelatedIds);
+
+  function toggleCareTag(tag: string) {
+    setCareTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
+  }
 
   const hasUnica = product.variants.some((v) => v.size === "Unica");
   const [uniqueMode, setUniqueMode] = useState(hasUnica);
@@ -145,7 +155,10 @@ export function ProductEditForm({
           ? Math.round(Number(compareAt.replace(",", ".")) * 100)
           : null,
         materials,
-        care,
+        care_tags: careTags,
+        care_note: careNote || null,
+        is_outlet: isOutlet,
+        collection: collection.trim() || null,
         status,
       });
       await replaceVariants(product.id, variants);
@@ -461,6 +474,35 @@ export function ProductEditForm({
           </section>
 
           <section className={formStyles.section}>
+            <h2 className={formStyles.sectionTitle}>Outlet</h2>
+            <label className={formStyles.uniqueRow}>
+              <input
+                type="checkbox"
+                checked={isOutlet}
+                onChange={(e) => setIsOutlet(e.target.checked)}
+              />
+              <span>Metti in Outlet</span>
+            </label>
+            {isOutlet ? (
+              <>
+                <p className={formStyles.hint}>
+                  Serve un prezzo scontato (sopra) più basso del prezzo pieno.
+                  Non compare in /shop, solo in /outlet.
+                </p>
+                <div className={formStyles.field}>
+                  <label htmlFor="collezione">Collezione</label>
+                  <input
+                    id="collezione"
+                    placeholder="Es. Collezione inverno 2025"
+                    value={collection}
+                    onChange={(e) => setCollection(e.target.value)}
+                  />
+                </div>
+              </>
+            ) : null}
+          </section>
+
+          <section className={formStyles.section}>
             <h2 className={formStyles.sectionTitle}>Dettagli</h2>
             <div className={formStyles.field}>
               <label htmlFor="mat">Materiali</label>
@@ -472,12 +514,27 @@ export function ProductEditForm({
               />
             </div>
             <div className={formStyles.field}>
-              <label htmlFor="cura">Cura del capo</label>
+              <label>Istruzioni di lavaggio</label>
+              <div className={formStyles.lookGrid}>
+                {CARE_TAGS.map((tag) => (
+                  <label key={tag} className={formStyles.lookOption}>
+                    <input
+                      type="checkbox"
+                      checked={careTags.includes(tag)}
+                      onChange={() => toggleCareTag(tag)}
+                    />
+                    <span>{tag}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+            <div className={formStyles.field}>
+              <label htmlFor="cura-nota">Nota di cura (facoltativa)</label>
               <input
-                id="cura"
-                placeholder="Es. lavaggio a mano in acqua fredda"
-                value={care}
-                onChange={(e) => setCare(e.target.value)}
+                id="cura-nota"
+                placeholder="Es. non esporre a fonti di calore dirette"
+                value={careNote}
+                onChange={(e) => setCareNote(e.target.value)}
               />
             </div>
             <div className={formStyles.field}>

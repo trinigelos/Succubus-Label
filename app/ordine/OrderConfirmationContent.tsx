@@ -16,9 +16,9 @@ const PAYMENT_LABELS: Record<string, string> = {
 };
 
 const SHIPPING_LABELS: Record<string, string> = {
-  standard: "Standard · 24/48h",
-  express: "Express",
-  europe: "Europa",
+  express_it: "Express · Italia",
+  express_eu: "Express · Europa",
+  hand_re: "Consegna a mano · Reggio Emilia",
 };
 
 const STEPS = ["Confermato", "In preparazione", "Spedito", "Consegnato"];

@@ -11,7 +11,7 @@ function validBody(overrides: Record<string, unknown> = {}) {
       city: "Milano",
       countryCode: "IT",
     },
-    shippingMethod: "standard",
+    shippingMethod: "express_it",
     paymentMethod: "paypal",
     discreetPackaging: true,
     items: [{ variantId: "v1", qty: 1 }],

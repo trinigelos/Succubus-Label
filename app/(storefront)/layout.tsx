@@ -1,3 +1,4 @@
+import { AddAlsoModal } from "@/components/cart/AddAlsoModal";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
@@ -26,6 +27,7 @@ export default function StorefrontLayout({
       {children}
       <Footer />
       <CartDrawer />
+      <AddAlsoModal />
     </>
   );
 }

@@ -1,4 +1,5 @@
-export type ShippingRates = { standard: number; express: number; europe: number };
+export type ShippingMethod = "express_it" | "express_eu" | "hand_re";
+export type ShippingRates = Record<ShippingMethod, number>;
 
 export type OrderTotals = {
   subtotalCents: number;
@@ -14,14 +15,16 @@ export type OrderTotals = {
  */
 export function computeOrderTotals(params: {
   subtotalCents: number;
-  shippingMethod: keyof ShippingRates;
+  shippingMethod: ShippingMethod;
   shippingRates: ShippingRates;
   freeShippingThresholdCents: number | null;
 }): OrderTotals {
   const { subtotalCents, shippingMethod, shippingRates, freeShippingThresholdCents } = params;
 
   const qualifiesForFreeShipping =
-    freeShippingThresholdCents !== null && subtotalCents >= freeShippingThresholdCents;
+    shippingMethod !== "hand_re" &&
+    freeShippingThresholdCents !== null &&
+    subtotalCents >= freeShippingThresholdCents;
 
   const shippingCents = qualifiesForFreeShipping
     ? 0

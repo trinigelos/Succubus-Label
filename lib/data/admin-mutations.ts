@@ -40,7 +40,10 @@ export type ProductUpdateFields = {
   price_cents?: number;
   compare_at_cents?: number | null;
   materials?: string | null;
-  care?: string | null;
+  care_tags?: string[];
+  care_note?: string | null;
+  is_outlet?: boolean;
+  collection?: string | null;
   featured?: boolean;
   status?: "draft" | "published";
 };
@@ -50,6 +53,17 @@ export async function updateProduct(
   fields: ProductUpdateFields
 ): Promise<void> {
   const supabase = createClient();
+
+  if (
+    fields.is_outlet &&
+    (!fields.compare_at_cents ||
+      (fields.price_cents !== undefined &&
+        fields.compare_at_cents <= fields.price_cents))
+  ) {
+    throw new Error(
+      "Per mettere il prodotto in Outlet serve un prezzo scontato più basso del prezzo pieno."
+    );
+  }
 
   if (fields.status === "published") {
     const { data: product } = await supabase

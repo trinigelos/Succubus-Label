@@ -42,6 +42,23 @@
   border: 1px solid var(--text);
 }
 
+.badgeOutlet {
+  background: var(--error);
+  color: #000000;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.priceCompare {
+  color: var(--muted);
+  text-decoration: line-through;
+  font-size: 12px;
+}
+
 .badgeEsaurito {
   position: absolute;
   top: 50%;

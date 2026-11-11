@@ -4,7 +4,12 @@ import type { Product } from "@/lib/types";
 
 const PRODUCT_SELECT = "*, categories(id, name, slug), variants(*), product_images(*)";
 
-export type AdminProductFilter = "tutti" | "pubblicati" | "bozze" | "esauriti";
+export type AdminProductFilter =
+  | "tutti"
+  | "pubblicati"
+  | "bozze"
+  | "esauriti"
+  | "outlet";
 
 export async function getAdminProducts(
   filter: AdminProductFilter = "tutti",
@@ -19,6 +24,7 @@ export async function getAdminProducts(
 
   if (filter === "pubblicati") query = query.eq("status", "published");
   if (filter === "bozze") query = query.eq("status", "draft");
+  if (filter === "outlet") query = query.eq("is_outlet", true);
   if (search) query = query.ilike("name", `%${search}%`);
 
   const { data, error } = await query;

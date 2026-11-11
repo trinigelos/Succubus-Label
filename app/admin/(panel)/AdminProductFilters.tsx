@@ -8,6 +8,7 @@ const TABS: { id: string; label: string }[] = [
   { id: "pubblicati", label: "Pubblicati" },
   { id: "bozze", label: "Bozze" },
   { id: "esauriti", label: "Esauriti" },
+  { id: "outlet", label: "Outlet" },
 ];
 
 export function AdminProductFilters() {

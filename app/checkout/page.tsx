@@ -8,19 +8,20 @@ import styles from "./page.module.css";
 
 export default function CheckoutPage() {
   const [shippingRates, setShippingRates] = useState({
-    standard: 0,
-    express: 0,
-    europe: 0,
+    express_it: 0,
+    express_eu: 0,
+    hand_re: 0,
   });
   const [freeShippingThresholdCents, setFreeShippingThresholdCents] = useState<
     number | null
   >(null);
   const [bankTransferReserveDays, setBankTransferReserveDays] = useState(3);
+  const [handDeliveryCaps, setHandDeliveryCaps] = useState<string[]>([]);
 
   useEffect(() => {
     getSettings()
       .then((settings) => {
-        const rates = settings["shipping_rates_cents"];
+        const rates = settings["shipping_prices"];
         if (rates && typeof rates === "object") {
           setShippingRates((prev) => ({ ...prev, ...(rates as object) }));
         }
@@ -30,6 +31,8 @@ export default function CheckoutPage() {
         );
         const days = settings["bank_transfer_reserve_days"];
         if (typeof days === "number") setBankTransferReserveDays(days);
+        const caps = settings["hand_delivery_caps"];
+        if (Array.isArray(caps)) setHandDeliveryCaps(caps as string[]);
       })
       .catch(() => {
         // Supabase not configured yet: defaults are used
@@ -59,6 +62,7 @@ export default function CheckoutPage() {
           shippingRates={shippingRates}
           freeShippingThresholdCents={freeShippingThresholdCents}
           bankTransferReserveDays={bankTransferReserveDays}
+          handDeliveryCaps={handDeliveryCaps}
         />
       </main>
     </div>

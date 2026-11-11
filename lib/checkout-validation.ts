@@ -12,7 +12,7 @@ export type CheckoutInput = {
   email: string;
   phone?: string;
   shippingAddress: ShippingAddressInput;
-  shippingMethod: "standard" | "express" | "europe";
+  shippingMethod: "express_it" | "express_eu" | "hand_re";
   paymentMethod: "paypal" | "bonifico" | "whatsapp";
   discreetPackaging: boolean;
   items: { variantId: string; qty: number }[];
@@ -38,7 +38,7 @@ export function validateCheckoutInput(body: unknown): CheckoutInput {
   if (!input.shippingAddress?.line1 || !input.shippingAddress?.postalCode) {
     throw new CheckoutError("Indirizzo di spedizione incompleto.");
   }
-  if (!["standard", "express", "europe"].includes(input.shippingMethod ?? "")) {
+  if (!["express_it", "express_eu", "hand_re"].includes(input.shippingMethod ?? "")) {
     throw new CheckoutError("Metodo di spedizione non valido.");
   }
   if (!["paypal", "bonifico", "whatsapp"].includes(input.paymentMethod ?? "")) {

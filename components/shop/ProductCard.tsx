@@ -24,6 +24,14 @@ export function ProductCard({ product }: { product: Product }) {
   const cover = productCover(product);
   const label = productLabel(product);
   const soldOut = totalStock(product) === 0;
+  const discountPercent =
+    product.is_outlet && product.compare_at_cents
+      ? Math.round(
+          ((product.compare_at_cents - product.price_cents) /
+            product.compare_at_cents) *
+            100
+        )
+      : null;
   const availableVariants = product.variants.filter(
     (v) => v.active && v.stock > 0
   );
@@ -69,11 +77,23 @@ export function ProductCard({ product }: { product: Product }) {
         {label === "esaurito" ? (
           <span className={styles.badgeEsaurito}>Esaurito</span>
         ) : null}
+        {discountPercent !== null ? (
+          <span className={`${styles.badge} ${styles.badgeOutlet}`}>
+            −{discountPercent}%
+          </span>
+        ) : null}
       </Link>
 
       <div className={styles.titleRow}>
         <Link href={href}>{product.name}</Link>
-        <span>{formatCents(product.price_cents)}</span>
+        <span className={styles.priceRow}>
+          {product.compare_at_cents ? (
+            <span className={styles.priceCompare}>
+              {formatCents(product.compare_at_cents)}
+            </span>
+          ) : null}
+          <span>{formatCents(product.price_cents)}</span>
+        </span>
       </div>
 
       <div className={styles.metaRow}>

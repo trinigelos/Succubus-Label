@@ -23,10 +23,9 @@ export default function TerminiPage() {
       <section>
         <h2>Prezzi e pagamento</h2>
         <p>
-          I prezzi sono indicati in euro e comprendono l&apos;IVA. Il
-          pagamento avviene tramite PayPal o bonifico bancario; per il
-          bonifico l&apos;ordine viene confermato solo dopo la ricezione
-          dell&apos;importo.
+          I prezzi sono indicati in euro e comprendono l&apos;IVA.
+          Confermiamo l&apos;ordine e il pagamento via WhatsApp; l&apos;ordine
+          viene preparato solo dopo la ricezione dell&apos;importo.
         </p>
       </section>
       <section>

@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/client";
 
 export type CartLine = {
   variantId: string;
+  productId: string;
   productSlug: string;
   productName: string;
   size: string;
@@ -18,6 +19,7 @@ type VariantRow = {
   stock: number;
   active: boolean;
   products: {
+    id: string;
     slug: string;
     name: string;
     price_cents: number;
@@ -33,7 +35,7 @@ export async function fetchCartLines(variantIds: string[]): Promise<CartLine[]> 
   const { data, error } = await supabase
     .from("variants")
     .select(
-      "id, size, stock, active, products(slug, name, price_cents, product_images(path, position))"
+      "id, size, stock, active, products(id, slug, name, price_cents, product_images(path, position))"
     )
     .in("id", variantIds)
     .returns<VariantRow[]>();
@@ -49,6 +51,7 @@ export async function fetchCartLines(variantIds: string[]): Promise<CartLine[]> 
       );
       return {
         variantId: row.id,
+        productId: product.id,
         productSlug: product.slug,
         productName: product.name,
         size: row.size,

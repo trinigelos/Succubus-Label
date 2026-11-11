@@ -16,29 +16,40 @@
   max-width: var(--container-max);
   margin: 0 auto;
   padding: 14px var(--gutter);
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px 32px;
+  gap: 12px;
 }
 
-.links {
+.menuBtn {
+  justify-self: start;
   display: flex;
-  flex-wrap: wrap;
-  gap: 4px 28px;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 20px;
+  padding: 14px 0;
+  cursor: pointer;
+}
+
+.menuBtnLabel {
   font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
-.links a,
-.links button {
-  text-decoration: none;
-  padding: 14px 0;
+.right {
+  justify-self: end;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
-.links button {
+.right button {
   background: transparent;
   border: 0;
   color: var(--text);
@@ -46,11 +57,18 @@
   font-size: inherit;
   letter-spacing: inherit;
   text-transform: inherit;
+  padding: 14px 0;
   cursor: pointer;
 }
 
-.links button:hover {
+.right button:hover {
   color: #ffffff;
+}
+
+@media (max-width: 480px) {
+  .menuBtnLabel {
+    display: none;
+  }
 }
 
 .logo {

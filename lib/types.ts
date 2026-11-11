@@ -32,7 +32,10 @@ export type Product = {
   price_cents: number;
   compare_at_cents: number | null;
   materials: string | null;
-  care: string | null;
+  care_tags: string[];
+  care_note: string | null;
+  is_outlet: boolean;
+  collection: string | null;
   featured: boolean;
   status: "draft" | "published";
   created_at: string;

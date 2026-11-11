@@ -43,11 +43,16 @@ type SeedProduct = {
   priceCents: number;
   compareAtCents?: number;
   materials: string;
-  care: string;
+  careTags: string[];
+  careNote?: string;
   featured?: boolean;
+  isOutlet?: boolean;
+  collection?: string;
   images: { file: string; alt: string }[];
   variants: { size: string; stock: number }[];
 };
+
+const HANDWASH_COLD = ["Lavaggio a mano", "Acqua fredda (max 30°)", "Non candeggiare"];
 
 const products: SeedProduct[] = [
   {
@@ -57,7 +62,7 @@ const products: SeedProduct[] = [
     categorySlug: "harness",
     priceCents: 6800,
     materials: "Elastam e metallo nichel-free.",
-    care: "Lavare a mano in acqua fredda. Non candeggiare.",
+    careTags: HANDWASH_COLD,
     featured: true,
     images: [{ file: "harness.jpg", alt: "Set harness nero" }],
     variants: [
@@ -74,7 +79,7 @@ const products: SeedProduct[] = [
     categorySlug: "body",
     priceCents: 5400,
     materials: "Tulle e pizzo elasticizzato.",
-    care: "Lavare a mano in acqua fredda. Non candeggiare.",
+    careTags: HANDWASH_COLD,
     featured: true,
     images: [{ file: "body.jpg", alt: "Body in tulle nero a maniche lunghe" }],
     variants: [
@@ -90,7 +95,7 @@ const products: SeedProduct[] = [
     categorySlug: "set",
     priceCents: 4200,
     materials: "Rete elasticizzata.",
-    care: "Lavare a mano in acqua fredda. Non candeggiare.",
+    careTags: HANDWASH_COLD,
     images: [{ file: "treccia.jpg", alt: "Reggiseno in rete nera" }],
     // stock total 2 → aparece como "Ultimi pezzi" (≤ 3)
     variants: [
@@ -105,7 +110,8 @@ const products: SeedProduct[] = [
     categorySlug: "accessori",
     priceCents: 3800,
     materials: "Pelle sintetica e metallo nichel-free.",
-    care: "Pulire con panno umido.",
+    careTags: [],
+    careNote: "Pulire con panno umido.",
     images: [
       { file: "collare.jpg", alt: "Collare in pelle nera con guinzaglio" },
     ],
@@ -118,7 +124,7 @@ const products: SeedProduct[] = [
     categorySlug: "set",
     priceCents: 7200,
     materials: "Rete elasticizzata e pizzo.",
-    care: "Lavare a mano in acqua fredda. Non candeggiare.",
+    careTags: HANDWASH_COLD,
     featured: true,
     images: [
       { file: "graffiti.jpg", alt: "Set in rete nera con collare, luce viola" },
@@ -138,7 +144,7 @@ const products: SeedProduct[] = [
     categorySlug: "set",
     priceCents: 3600,
     materials: "Cotone elasticizzato.",
-    care: "Lavare a mano in acqua fredda. Non candeggiare.",
+    careTags: HANDWASH_COLD,
     featured: true,
     images: [{ file: "tramonto.jpg", alt: "Reggiseno nero al tramonto" }],
     variants: [
@@ -154,7 +160,7 @@ const products: SeedProduct[] = [
     categorySlug: "set",
     priceCents: 5800,
     materials: "Pizzo e rete elasticizzata.",
-    care: "Lavare a mano in acqua fredda. Non candeggiare.",
+    careTags: HANDWASH_COLD,
     images: [
       { file: "casa.jpg", alt: "Lingerie nera in una casa abbandonata" },
     ],
@@ -168,19 +174,39 @@ const products: SeedProduct[] = [
     categorySlug: "accessori",
     priceCents: 2400,
     materials: "Pelle sintetica e metallo nichel-free.",
-    care: "Pulire con panno umido.",
+    careTags: [],
+    careNote: "Pulire con panno umido.",
     images: [{ file: "polsino.jpg", alt: "Polsino in pelle nera" }],
     variants: [{ size: "Unica", stock: 10 }],
+  },
+  {
+    slug: "body-collezione-precedente",
+    name: "Body in rete (collezione precedente)",
+    description: "Body in rete nera, dalla collezione passata.",
+    categorySlug: "body",
+    priceCents: 3900,
+    compareAtCents: 5800,
+    materials: "Rete elasticizzata.",
+    careTags: HANDWASH_COLD,
+    isOutlet: true,
+    collection: "Collezione inverno 2025",
+    images: [{ file: "ciliegie.jpg", alt: "Body in rete nera" }],
+    variants: [
+      { size: "S", stock: 2 },
+      { size: "M", stock: 3 },
+    ],
   },
 ];
 
 const settings: { key: string; value: unknown }[] = [
   { key: "free_shipping_threshold_cents", value: 8000 },
   {
-    key: "shipping_rates_cents",
-    value: { standard: 500, express: 900, europe: 1200 },
+    key: "shipping_prices",
+    value: { express_it: 500, express_eu: 1200, hand_re: 0 },
   },
+  { key: "hand_delivery_caps", value: ["42121", "42122", "42123", "42124"] },
   { key: "bank_transfer_reserve_days", value: 3 },
+  { key: "upsell_product_ids", value: [] },
 ];
 
 function contentTypeFor(file: string) {
@@ -222,8 +248,11 @@ async function main() {
           price_cents: product.priceCents,
           compare_at_cents: product.compareAtCents ?? null,
           materials: product.materials,
-          care: product.care,
+          care_tags: product.careTags,
+          care_note: product.careNote ?? null,
           featured: product.featured ?? false,
+          is_outlet: product.isOutlet ?? false,
+          collection: product.collection ?? null,
           status: "published",
         },
         { onConflict: "slug" }

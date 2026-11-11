@@ -35,6 +35,7 @@ export async function getShopProducts(
     .from("products")
     .select(PRODUCT_SELECT)
     .eq("status", "published")
+    .eq("is_outlet", false)
     .is("archived_at", null);
   if (error) throw error;
 
@@ -71,6 +72,31 @@ export async function getShopProducts(
   return products;
 }
 
+export async function getOutletProducts(filters: {
+  collection?: string;
+} = {}): Promise<Product[]> {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from("products")
+    .select(PRODUCT_SELECT)
+    .eq("status", "published")
+    .eq("is_outlet", true)
+    .is("archived_at", null)
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+
+  let products = (data as Product[]).map((p) => ({
+    ...p,
+    product_images: sortImages(p.product_images),
+  }));
+
+  if (filters.collection) {
+    products = products.filter((p) => p.collection === filters.collection);
+  }
+
+  return products;
+}
+
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   const supabase = createClient();
   const { data, error } = await supabase
@@ -92,6 +118,7 @@ export async function getFeaturedProducts(limit = 4): Promise<Product[]> {
     .select(PRODUCT_SELECT)
     .eq("status", "published")
     .eq("line", "lingerie")
+    .eq("is_outlet", false)
     .is("archived_at", null)
     .order("featured", { ascending: false })
     .order("created_at", { ascending: false })

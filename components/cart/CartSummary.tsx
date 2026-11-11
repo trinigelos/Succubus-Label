@@ -76,7 +76,7 @@ export function CartSummary() {
         Vai al checkout
       </Link>
       <p className={styles.paymentNote}>
-        PayPal (anche con carta) · Bonifico bancario
+        Confermiamo l&apos;ordine e il pagamento su WhatsApp
       </p>
     </div>
   );

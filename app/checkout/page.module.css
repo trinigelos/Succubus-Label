@@ -114,7 +114,8 @@
   color: var(--text);
   padding: 0 14px;
   font-family: inherit;
-  font-size: 15px;
+  /* 16px so iOS Safari doesn't zoom in on focus (CAMBIOS §7) */
+  font-size: 16px;
   box-sizing: border-box;
 }
 
@@ -328,4 +329,44 @@
 .summaryTotalValue span:last-child {
   font-size: 12px;
   color: var(--muted);
+}
+
+.summaryToggle {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .main {
+    gap: 40px;
+  }
+
+  .summary {
+    order: -1;
+    max-width: none;
+  }
+
+  .summaryToggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: transparent;
+    border: 0;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .summaryCollapsible {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .summaryCollapsibleOpen {
+    display: flex;
+  }
 }

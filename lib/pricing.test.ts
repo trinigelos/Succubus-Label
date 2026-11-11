@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { cartSubtotalCents, computeOrderTotals } from "./pricing";
 
-const RATES = { standard: 500, express: 900, europe: 1200 };
+const RATES = { express_it: 500, express_eu: 1200, hand_re: 0 };
 
 describe("computeOrderTotals", () => {
   it("adds the selected shipping rate to the subtotal", () => {
     const result = computeOrderTotals({
       subtotalCents: 4200,
-      shippingMethod: "standard",
+      shippingMethod: "express_it",
       shippingRates: RATES,
       freeShippingThresholdCents: null,
     });
@@ -21,7 +21,7 @@ describe("computeOrderTotals", () => {
   it("picks the rate for the chosen method", () => {
     const result = computeOrderTotals({
       subtotalCents: 1000,
-      shippingMethod: "europe",
+      shippingMethod: "express_eu",
       shippingRates: RATES,
       freeShippingThresholdCents: null,
     });
@@ -31,7 +31,7 @@ describe("computeOrderTotals", () => {
   it("waives shipping once the subtotal reaches the free threshold", () => {
     const result = computeOrderTotals({
       subtotalCents: 8000,
-      shippingMethod: "express",
+      shippingMethod: "express_it",
       shippingRates: RATES,
       freeShippingThresholdCents: 8000,
     });
@@ -42,7 +42,7 @@ describe("computeOrderTotals", () => {
   it("still charges shipping just below the threshold", () => {
     const result = computeOrderTotals({
       subtotalCents: 7999,
-      shippingMethod: "standard",
+      shippingMethod: "express_it",
       shippingRates: RATES,
       freeShippingThresholdCents: 8000,
     });
@@ -52,11 +52,21 @@ describe("computeOrderTotals", () => {
   it("ignores the threshold when it is not configured", () => {
     const result = computeOrderTotals({
       subtotalCents: 1_000_000,
-      shippingMethod: "standard",
+      shippingMethod: "express_it",
       shippingRates: RATES,
       freeShippingThresholdCents: null,
     });
     expect(result.shippingCents).toBe(500);
+  });
+
+  it("hand delivery is always free, even without reaching the threshold", () => {
+    const result = computeOrderTotals({
+      subtotalCents: 1000,
+      shippingMethod: "hand_re",
+      shippingRates: RATES,
+      freeShippingThresholdCents: null,
+    });
+    expect(result.shippingCents).toBe(0);
   });
 });
 

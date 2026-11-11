@@ -178,7 +178,7 @@ export default function Home() {
             width={400}
             height={400}
           />
-          <span className={styles.detailTitle}>Spedizioni 24/48h</span>
+          <span className={styles.detailTitle}>Spedizione sempre Express</span>
           <span className={styles.detailCopy}>
             Ogni ordine parte impacchettato a mano.
           </span>

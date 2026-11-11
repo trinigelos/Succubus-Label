@@ -3,21 +3,20 @@
 import { useCart } from "@/lib/cart/CartContext";
 import { CheckoutError, reserveOrder } from "@/lib/checkout";
 import { formatCents } from "@/lib/format";
-import { computeOrderTotals, type ShippingRates } from "@/lib/pricing";
+import { computeOrderTotals, type ShippingMethod, type ShippingRates } from "@/lib/pricing";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import styles from "@/app/checkout/page.module.css";
 
-const SHIPPING_OPTIONS: {
-  id: "standard" | "express" | "europe";
-  title: string;
-  sub: string;
-}[] = [
-  { id: "standard", title: "Standard · 24/48h", sub: "Corriere — Italia" },
-  { id: "express", title: "Express", sub: "Corriere — consegna il giorno dopo" },
-  { id: "europe", title: "Europa", sub: "Corriere — 3/5 giorni lavorativi" },
-];
+const SHIPPING_TITLES: Record<ShippingMethod, { title: string; sub: string }> = {
+  express_it: { title: "Express · Italia", sub: "Corriere — consegna il giorno dopo" },
+  express_eu: { title: "Express · Europa", sub: "Corriere — 3/5 giorni lavorativi" },
+  hand_re: {
+    title: "Consegna a mano · Reggio Emilia",
+    sub: "Giorno e luogo si accordano su WhatsApp",
+  },
+};
 
 const COUNTRIES = [
   { code: "IT", name: "Italia" },
@@ -27,16 +26,16 @@ const COUNTRIES = [
   { code: "AT", name: "Austria" },
 ];
 
-type PaymentMethod = "whatsapp" | "bonifico";
-
 export function CheckoutForm({
   shippingRates,
   freeShippingThresholdCents,
   bankTransferReserveDays,
+  handDeliveryCaps,
 }: {
   shippingRates: ShippingRates;
   freeShippingThresholdCents: number | null;
   bankTransferReserveDays: number;
+  handDeliveryCaps: string[];
 }) {
   const router = useRouter();
   const { lines, subtotalCents, discreetPackaging, clearCart } = useCart();
@@ -51,22 +50,36 @@ export function CheckoutForm({
   const [provincia, setProvincia] = useState("");
   const [paese, setPaese] = useState("IT");
   const [telefono, setTelefono] = useState("");
-  const [shippingMethod, setShippingMethod] =
-    useState<(typeof SHIPPING_OPTIONS)[number]["id"]>("standard");
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("whatsapp");
+  const [shippingMethod, setShippingMethod] = useState<ShippingMethod>("express_it");
+  const paymentMethod = "whatsapp" as const;
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [summaryOpen, setSummaryOpen] = useState(false);
+
+  const handDeliveryAvailable = paese === "IT" && handDeliveryCaps.includes(cap.trim());
+  const availableShippingMethods: ShippingMethod[] = useMemo(() => {
+    const methods: ShippingMethod[] = [paese === "IT" ? "express_it" : "express_eu"];
+    if (handDeliveryAvailable) methods.push("hand_re");
+    return methods;
+  }, [paese, handDeliveryAvailable]);
+
+  // Falls back to the first available method when the chosen one stops
+  // being offered (e.g. the country changes, or the CAP no longer
+  // qualifies for hand delivery), without needing an effect for it.
+  const effectiveShippingMethod = availableShippingMethods.includes(shippingMethod)
+    ? shippingMethod
+    : availableShippingMethods[0];
 
   const { shippingCents, totalCents } = useMemo(
     () =>
       computeOrderTotals({
         subtotalCents,
-        shippingMethod,
+        shippingMethod: effectiveShippingMethod,
         shippingRates,
         freeShippingThresholdCents,
       }),
-    [shippingRates, shippingMethod, subtotalCents, freeShippingThresholdCents]
+    [shippingRates, effectiveShippingMethod, subtotalCents, freeShippingThresholdCents]
   );
 
   function validate(): string | null {
@@ -93,7 +106,7 @@ export function CheckoutForm({
         state: provincia || undefined,
         countryCode: paese,
       },
-      shippingMethod,
+      shippingMethod: effectiveShippingMethod,
       paymentMethod,
       discreetPackaging,
       items: lines.map((l) => ({ variantId: l.variantId, qty: l.qty })),
@@ -245,74 +258,54 @@ export function CheckoutForm({
 
         <fieldset className={styles.fieldset}>
           <legend className={styles.legend}>3. Spedizione</legend>
-          {SHIPPING_OPTIONS.map((opt) => (
-            <label
-              key={opt.id}
-              className={`${styles.radioOption} ${shippingMethod === opt.id ? styles.radioOptionOn : ""}`}
-            >
-              <input
-                type="radio"
-                name="spedizione"
-                checked={shippingMethod === opt.id}
-                onChange={() => setShippingMethod(opt.id)}
-              />
-              <span className={styles.radioText}>
-                <span className={styles.radioTitle}>{opt.title}</span>
-                <span className={styles.radioSub}>{opt.sub}</span>
-              </span>
-              <span>
-                {shippingCents === 0
-                  ? "Gratis"
-                  : formatCents(shippingRates[opt.id] ?? 0)}
-              </span>
-            </label>
-          ))}
+          {availableShippingMethods.map((method) => {
+            const opt = SHIPPING_TITLES[method];
+            const rate = shippingRates[method] ?? 0;
+            return (
+              <label
+                key={method}
+                className={`${styles.radioOption} ${effectiveShippingMethod === method ? styles.radioOptionOn : ""}`}
+              >
+                <input
+                  type="radio"
+                  name="spedizione"
+                  checked={effectiveShippingMethod === method}
+                  onChange={() => setShippingMethod(method)}
+                />
+                <span className={styles.radioText}>
+                  <span className={styles.radioTitle}>{opt.title}</span>
+                  <span className={styles.radioSub}>{opt.sub}</span>
+                </span>
+                <span>
+                  {method === effectiveShippingMethod && shippingCents === 0
+                    ? "Gratis"
+                    : rate === 0
+                      ? "Gratis"
+                      : formatCents(rate)}
+                </span>
+              </label>
+            );
+          })}
           <p className={styles.helpText}>
-            Ogni pacco parte in imballo neutro, senza logo all&apos;esterno.
+            Spedizione sempre Express, in imballo neutro senza logo
+            all&apos;esterno.
+            {paese === "IT" && !handDeliveryAvailable
+              ? " La consegna a mano a Reggio Emilia è disponibile solo per alcuni CAP."
+              : ""}
           </p>
         </fieldset>
 
         <fieldset className={styles.fieldset}>
           <legend className={styles.legend}>4. Pagamento</legend>
-          <div
-            className={`${styles.paymentBox} ${paymentMethod === "whatsapp" ? styles.paymentBoxOn : ""}`}
-          >
-            <label className={styles.paymentLabel}>
-              <input
-                type="radio"
-                name="pagamento"
-                checked={paymentMethod === "whatsapp"}
-                onChange={() => setPaymentMethod("whatsapp")}
-              />
+          <div className={`${styles.paymentBox} ${styles.paymentBoxOn}`}>
+            <span className={styles.paymentLabel}>
               <span>WhatsApp</span>
-            </label>
-            {paymentMethod === "whatsapp" ? (
-              <p className={styles.paymentNote}>
-                Confermiamo l&apos;ordine e ti scriviamo su WhatsApp con il
-                link per pagare. Le taglie restano riservate per{" "}
-                {bankTransferReserveDays} giorni.
-              </p>
-            ) : null}
-          </div>
-          <div
-            className={`${styles.paymentBox} ${paymentMethod === "bonifico" ? styles.paymentBoxOn : ""}`}
-          >
-            <label className={styles.paymentLabel}>
-              <input
-                type="radio"
-                name="pagamento"
-                checked={paymentMethod === "bonifico"}
-                onChange={() => setPaymentMethod("bonifico")}
-              />
-              <span>Bonifico bancario</span>
-            </label>
-            {paymentMethod === "bonifico" ? (
-              <p className={styles.paymentNote}>
-                Ricevi IBAN e causale via email. Spediamo appena arriva il
-                pagamento; le taglie restano riservate per{" "}
-                {bankTransferReserveDays} giorni.
-              </p>
-            ) : null}
+            </span>
+            <p className={styles.paymentNote}>
+              Confermiamo l&apos;ordine e ti scriviamo su WhatsApp con il link
+              per pagare. Le taglie restano riservate per{" "}
+              {bankTransferReserveDays} giorni.
+            </p>
           </div>
         </fieldset>
 
@@ -342,39 +335,54 @@ export function CheckoutForm({
       </form>
 
       <aside aria-label="Riepilogo ordine" className={styles.summary}>
-        <h2 className={styles.summaryTitle}>Il tuo ordine</h2>
-        {lines.map((line) => (
-          <div key={line.variantId} className={styles.summaryItem}>
-            {line.image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={line.image} alt={line.productName} />
-            ) : null}
-            <span className={styles.summaryItemText}>
-              <span>{line.productName}</span>
-              <span className={styles.summaryItemMeta}>
-                Taglia {line.size} · {line.qty} pz
+        <button
+          type="button"
+          className={styles.summaryToggle}
+          aria-expanded={summaryOpen}
+          onClick={() => setSummaryOpen((v) => !v)}
+        >
+          <span>
+            {summaryOpen ? "Nascondi riepilogo" : "Mostra riepilogo"} ·{" "}
+            {formatCents(totalCents)}
+          </span>
+          <span aria-hidden="true">{summaryOpen ? "−" : "+"}</span>
+        </button>
+        <div
+          className={`${styles.summaryCollapsible} ${summaryOpen ? styles.summaryCollapsibleOpen : ""}`}
+        >
+          <h2 className={styles.summaryTitle}>Il tuo ordine</h2>
+          {lines.map((line) => (
+            <div key={line.variantId} className={styles.summaryItem}>
+              {line.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={line.image} alt={line.productName} />
+              ) : null}
+              <span className={styles.summaryItemText}>
+                <span>{line.productName}</span>
+                <span className={styles.summaryItemMeta}>
+                  Taglia {line.size} · {line.qty} pz
+                </span>
               </span>
-            </span>
-            <span>{formatCents(line.priceCents * line.qty)}</span>
-          </div>
-        ))}
-        <div className={styles.summaryTotals}>
-          <div className={styles.summaryRow}>
-            <span>Subtotale</span>
-            <span>{formatCents(subtotalCents)}</span>
-          </div>
-          <div className={styles.summaryRow}>
-            <span>
-              Spedizione ·{" "}
-              {SHIPPING_OPTIONS.find((o) => o.id === shippingMethod)?.title}
-            </span>
-            <span>
-              {shippingCents === 0 ? "Gratis" : formatCents(shippingCents)}
-            </span>
-          </div>
-          <div className={`${styles.summaryRow} ${styles.summaryMuted}`}>
-            <span>Imballo discreto</span>
-            <span>{discreetPackaging ? "Incluso" : "Non richiesto"}</span>
+              <span>{formatCents(line.priceCents * line.qty)}</span>
+            </div>
+          ))}
+          <div className={styles.summaryTotals}>
+            <div className={styles.summaryRow}>
+              <span>Subtotale</span>
+              <span>{formatCents(subtotalCents)}</span>
+            </div>
+            <div className={styles.summaryRow}>
+              <span>
+                Spedizione · {SHIPPING_TITLES[effectiveShippingMethod].title}
+              </span>
+              <span>
+                {shippingCents === 0 ? "Gratis" : formatCents(shippingCents)}
+              </span>
+            </div>
+            <div className={`${styles.summaryRow} ${styles.summaryMuted}`}>
+              <span>Imballo discreto</span>
+              <span>{discreetPackaging ? "Incluso" : "Non richiesto"}</span>
+            </div>
           </div>
         </div>
         <div className={styles.summaryTotal}>

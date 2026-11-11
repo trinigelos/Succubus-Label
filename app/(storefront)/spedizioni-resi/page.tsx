@@ -15,9 +15,10 @@ export default function SpedizioniResiPage() {
         <h2>Spedizioni</h2>
         <p>
           Ogni ordine parte impacchettato a mano, in un imballo neutro: senza
-          logo né descrizione del contenuto all&apos;esterno. Tempi standard
-          24/48h in Italia; sono disponibili anche la spedizione Express e
-          quella in Europa.
+          logo né descrizione del contenuto all&apos;esterno. Spediamo sempre
+          in Express, sia in Italia che in Europa. A Reggio Emilia, per
+          alcuni CAP, è disponibile anche la consegna a mano: giorno e
+          luogo si accordano su WhatsApp.
         </p>
         <p className={styles.pending}>
           Corriere, costi esatti e soglia di spedizione gratuita — in attesa
